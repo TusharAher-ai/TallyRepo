@@ -1,0 +1,4011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══ PRIMARY SEO ═══ -->
+<title>TallyRepo – Auto Entry | Upload Bank Statement to Tally Automatically | Free Tally Import Tool</title>
+<meta name="description" content="TallyRepo Auto Entry – Upload your bank statement (PDF/Excel/CSV) and automatically generate Tally Prime or ERP 9 XML vouchers. Free, offline, no login. Convert SBI, HDFC, ICICI, Axis bank statements to Tally in seconds. Beta version – free to use.">
+<meta name="keywords" content="tallyrepo, tally auto entry, upload bank statement to tally, bank statement to tally automatically, tally xml import, tally prime import, tally erp 9 import, bank statement converter tally, tally voucher generator, automatic tally entry, tally pdf import, tally excel import, free tally tool, tally entry software free, bank to tally converter, SBI statement tally, HDFC statement tally, ICICI statement tally, tally automation tool, tally prime xml, tally import vouchers, tally bank reconciliation, tally data entry automation, convert bank statement tally, tally entry from bank statement, free tally xml generator, tally prime voucher import, indian bank statement tally, tally accounting software tool, auto voucher entry tally, tally csv import, tally bulk entry">
+<meta name="author" content="TallyRepo">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="theme-color" content="#00d4aa">
+<link rel="canonical" href="https://tallyrepo.github.io/">
+
+<!-- ═══ OPEN GRAPH (Facebook / WhatsApp / LinkedIn) ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TallyRepo">
+<meta property="og:title" content="TallyRepo – Upload Bank Statement to Tally Automatically | Free">
+<meta property="og:description" content="Convert any bank statement (PDF/Excel/CSV) to Tally Prime or ERP 9 XML in seconds. Free, offline, no login required. Supports SBI, HDFC, ICICI, Axis and more. Beta version – free to use.">
+<meta property="og:url" content="https://tallyrepo.github.io/">
+<meta property="og:locale" content="en_IN">
+
+<!-- ═══ TWITTER CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TallyRepo – Auto Entry | Bank Statement to Tally XML Free">
+<meta name="twitter:description" content="Upload bank statement → get Tally XML instantly. Supports Tally Prime & ERP 9. Free offline tool. No login. Beta version.">
+<meta name="twitter:site" content="@tallyrepo">
+
+<!-- ═══ STRUCTURED DATA (Google Rich Results) ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TallyRepo – Auto Entry",
+  "alternateName": ["TallyRepo", "Tally Auto Entry", "Bank Statement to Tally Converter"],
+  "description": "Free tool to upload bank statements (PDF/Excel/CSV) and automatically generate Tally Prime or ERP 9 compatible XML voucher files. Supports SBI, HDFC, ICICI, Axis, Kotak, PNB and generic bank formats.",
+  "applicationCategory": "FinanceApplication",
+  "applicationSubCategory": "Accounting Automation",
+  "operatingSystem": "Any (Browser-based)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR",
+    "availability": "https://schema.org/InStock"
+  },
+  "featureList": [
+    "Upload bank statement to Tally automatically",
+    "Convert PDF bank statement to Tally XML",
+    "Convert Excel bank statement to Tally XML",
+    "Tally Prime XML export",
+    "Tally ERP 9 XML export",
+    "SBI, HDFC, ICICI, Axis bank statement support",
+    "Auto voucher classification",
+    "Ledger rule engine",
+    "Running balance calculation",
+    "User notes per transaction",
+    "100% free and offline"
+  ],
+  "softwareVersion": "Beta",
+  "releaseNotes": "Beta version – under active development and testing. Free to use.",
+  "inLanguage": "en-IN",
+  "isAccessibleForFree": true,
+  "keywords": "tallyrepo, tally auto entry, bank statement to tally, tally xml import, tally prime, tally erp9"
+}
+</script>
+
+<!-- ═══ FONTS ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<!-- PDF.js for PDF parsing (open source, Apache 2.0) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- SheetJS for Excel read/write (open source, Apache 2.0) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+/* ============================================================
+   DESIGN SYSTEM — Industrial Ledger Theme
+   Palette: Deep navy + Teal + Amber
+============================================================ */
+:root {
+  --bg:        #0b0f1a;
+  --bg2:       #111827;
+  --bg3:       #1c2539;
+  --bg4:       #243047;
+  --border:    #2a3a52;
+  --border2:   #3a4f6a;
+  --teal:      #00d4aa;
+  --teal-dim:  #00a882;
+  --teal-glow: rgba(0,212,170,0.12);
+  --amber:     #f59e0b;
+  --amber-dim: #d97706;
+  --red:       #f87171;
+  --red-dim:   #dc2626;
+  --green:     #34d399;
+  --blue:      #60a5fa;
+  --text:      #e2e8f0;
+  --text2:     #94a3b8;
+  --text3:     #64748b;
+  --mono:      'IBM Plex Mono', monospace;
+  --sans:      'Syne', sans-serif;
+  --radius:    8px;
+  --radius-lg: 14px;
+  --shadow:    0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.6);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,212,170,0.06) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal-dim); }
+
+/* ── Header ── */
+.header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(11,15,26,0.9);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0 24px;
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 0 20px rgba(0,212,170,0.3);
+}
+.logo-text {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+.logo-text span { color: var(--teal); }
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+.badge {
+  background: var(--teal-glow);
+  border: 1px solid rgba(0,212,170,0.3);
+  color: var(--teal);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ── Steps indicator ── */
+.steps-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.steps-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+}
+.step-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  position: relative;
+}
+.step-tab:hover { color: var(--text2); }
+.step-tab.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+.step-tab.completed {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.step-tab.completed .step-num { background: var(--green); border-color: var(--green); color: var(--bg); }
+.step-tab.active .step-num { background: var(--teal); border-color: var(--teal); color: var(--bg); }
+
+/* ── Main layout ── */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ── Panels (step content) ── */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ── Card ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Upload Zone ── */
+.upload-zone {
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+}
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+.upload-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+.upload-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.upload-sub {
+  color: var(--text2);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.upload-formats {
+  display: inline-flex;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.fmt-tag {
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--teal); color: var(--bg); }
+.btn-primary:hover:not(:disabled) { background: #00e8bb; box-shadow: 0 0 20px rgba(0,212,170,0.4); }
+.btn-secondary { background: transparent; border-color: var(--border2); color: var(--text2); }
+.btn-secondary:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); }
+.btn-amber { background: var(--amber); color: var(--bg); }
+.btn-amber:hover:not(:disabled) { background: #fbbf24; }
+.btn-danger { background: transparent; border-color: var(--red-dim); color: var(--red); }
+.btn-danger:hover:not(:disabled) { background: rgba(248,113,113,0.1); }
+.btn-sm { padding: 5px 12px; font-size: 11px; }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── Form controls ── */
+label { font-size: 12px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 4px; font-family: var(--mono); }
+select, input[type="text"], input[type="number"], textarea {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 12px;
+  transition: border-color 0.15s;
+  outline: none;
+}
+select:focus, input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+select option { background: var(--bg3); }
+.form-row { display: grid; gap: 12px; }
+.form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+
+/* ── Bank preset cards ── */
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.bank-card {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  font-family: var(--mono);
+}
+.bank-card:hover { border-color: var(--border2); }
+.bank-card.selected { border-color: var(--teal); background: var(--teal-glow); }
+.bank-card .bank-logo { font-size: 22px; margin-bottom: 6px; display: block; }
+.bank-card .bank-name { font-size: 11px; font-weight: 600; color: var(--text2); }
+.bank-card.selected .bank-name { color: var(--teal); }
+
+/* ── Column Map Preview Table ── */
+.preview-table {
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+  width: 100%;
+}
+.preview-table th {
+  background: var(--bg4);
+  color: var(--text3);
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.preview-table th:hover {
+  background: var(--bg3);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+.preview-table th.col-header-mapped {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+.preview-table th.col-header-active {
+  background: var(--teal);
+  color: var(--bg);
+  border-color: var(--teal);
+  box-shadow: 0 0 12px rgba(0,212,170,0.4);
+}
+.preview-table td {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.preview-table tr.header-row td {
+  background: rgba(245,158,11,0.08);
+  color: var(--amber);
+  font-weight: 600;
+  border-color: rgba(245,158,11,0.3);
+}
+.preview-table td.col-highlighted {
+  background: var(--teal-glow);
+  color: var(--teal);
+}
+.preview-table th .col-idx {
+  display: block;
+  font-size: 9px;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+.preview-table th .col-name {
+  display: block;
+  font-size: 10px;
+}
+.preview-table th .col-badge {
+  display: block;
+  font-size: 9px;
+  margin-top: 3px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(0,212,170,0.2);
+  color: var(--teal);
+  text-align: center;
+}
+
+/* ── Compact field row in right pane ── */
+.field-map-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 4px;
+  background: var(--bg3);
+}
+.field-map-row:hover { border-color: var(--border2); }
+.field-map-row.active-field {
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+.field-map-row.mapped {
+  border-color: rgba(0,212,170,0.25);
+}
+.field-map-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--teal);
+  width: 90px;
+  flex-shrink: 0;
+}
+.field-map-select {
+  flex: 1;
+  font-size: 10px;
+  padding: 4px 6px;
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: var(--mono);
+}
+.field-map-select:focus { border-color: var(--teal); outline: none; }
+.field-map-clear {
+  width: 18px; height: 18px;
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+}
+.field-map-clear:hover { color: var(--red); }
+
+/* ── Transaction table ── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.txn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.txn-table th {
+  background: var(--bg4);
+  color: var(--text2);
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.txn-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+.txn-table tr:last-child td { border-bottom: none; }
+.txn-table tr:hover td { background: rgba(255,255,255,0.02); }
+.txn-table tr.has-error td { background: rgba(248,113,113,0.05); }
+.txn-table tr.is-duplicate td { background: rgba(245,158,11,0.05); }
+.txn-table td.debit { color: var(--red); }
+.txn-table td.credit { color: var(--green); }
+.txn-table td.balance { color: var(--blue); }
+.editable-cell {
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 4px;
+  color: inherit;
+  font-family: var(--mono);
+  font-size: 12px;
+  width: 100%;
+  min-width: 80px;
+}
+.editable-cell:focus { background: var(--bg4); border: 1px solid var(--teal); outline: none; }
+.ledger-cell { min-width: 160px; }
+.voucher-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.vtype-receipt { background: rgba(52,211,153,0.15); color: var(--green); }
+.vtype-payment { background: rgba(248,113,113,0.15); color: var(--red); }
+.vtype-contra  { background: rgba(96,165,250,0.15); color: var(--blue); }
+.err-icon { color: var(--red); font-size: 14px; cursor: help; }
+.dup-icon { color: var(--amber); font-size: 14px; cursor: help; }
+.row-num { color: var(--text3); font-size: 10px; }
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+}
+.page-btns { display: flex; gap: 4px; }
+.page-btn {
+  width: 30px; height: 30px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.page-btn:hover { border-color: var(--teal); color: var(--teal); }
+.page-btn.active { background: var(--teal); color: var(--bg); border-color: var(--teal); }
+
+/* ── Rules engine ── */
+.rules-list { display: flex; flex-direction: column; gap: 8px; }
+.rule-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.rule-keyword {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--amber);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.rule-arrow { color: var(--text3); }
+.rule-ledger {
+  background: var(--teal-glow);
+  border: 1px solid rgba(0,212,170,0.3);
+  color: var(--teal);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.rule-actions { margin-left: auto; display: flex; gap: 4px; }
+
+/* ── Export panel ── */
+.export-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.export-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.export-card:hover { border-color: var(--border2); }
+.export-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+.export-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.export-desc { font-size: 12px; color: var(--text2); margin-bottom: 20px; font-family: var(--mono); }
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.stat-chip {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-chip .stat-val { font-size: 18px; font-weight: 700; }
+.stat-val.green { color: var(--green); }
+.stat-val.red { color: var(--red); }
+.stat-val.amber { color: var(--amber); }
+.stat-val.blue { color: var(--blue); }
+
+/* ── Notice/Alert ── */
+.notice {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.notice-info { background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.3); color: var(--blue); }
+.notice-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--amber); }
+.notice-ok   { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: var(--green); }
+.notice-err  { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: var(--red); }
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 560px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+.modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+
+/* ── Progress bar ── */
+.progress-wrap { background: var(--bg3); border-radius: 4px; height: 4px; overflow: hidden; margin-top: 8px; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--teal), #00e8bb); border-radius: 4px; transition: width 0.3s; }
+
+/* ── Tooltip ── */
+[data-tip] { position: relative; cursor: help; }
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 50;
+}
+[data-tip]:hover::after { opacity: 1; }
+
+/* ── Inline bulk row ── */
+.bulk-bar {
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.bulk-bar input { max-width: 220px; }
+.bulk-bar .btn { flex-shrink: 0; }
+
+/* ── Loading overlay ── */
+#loadingOverlay {
+  position: fixed; inset: 0;
+  background: rgba(11,15,26,0.92);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  backdrop-filter: blur(4px);
+}
+#loadingOverlay.show { display: flex; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border2);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loadingText { font-family: var(--mono); font-size: 13px; color: var(--text2); }
+
+/* ── Checkbox ── */
+input[type="checkbox"] {
+  width: 14px; height: 14px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+
+/* ── Company config ── */
+.company-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .form-row.cols-2, .form-row.cols-3, .form-row.cols-4 { grid-template-columns: 1fr; }
+  .export-grid { grid-template-columns: 1fr; }
+  .company-row { grid-template-columns: 1fr; }
+  .steps-bar { overflow-x: auto; }
+  .step-tab { font-size: 10px; padding: 12px 12px; gap: 6px; }
+}
+
+/* ── Sample notice ── */
+.sample-bar {
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(0,212,170,0.05));
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── filter row ── */
+.filter-bar {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.filter-bar input[type="text"] { max-width: 240px; }
+.filter-bar select { max-width: 160px; }
+
+/* ── Text-to-Columns ── */
+.t2c-step-tab {
+  padding: 10px 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all .15s;
+  user-select: none;
+}
+.t2c-step-tab:hover { color: var(--text2); }
+.t2c-step-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.t2c-step-num {
+  width: 18px; height: 18px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  flex-shrink: 0;
+}
+.t2c-step-tab.active .t2c-step-num { background: var(--teal); border-color: var(--teal); color: var(--bg); }
+
+.t2c-panel { display: none; }
+.t2c-panel.active { display: block; }
+
+.t2c-method-card {
+  display: flex;
+  cursor: pointer;
+}
+.t2c-method-card input[type="radio"] { display: none; }
+.t2c-card-inner {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  background: var(--bg3);
+  width: 100%;
+  transition: all .15s;
+}
+.t2c-method-card:hover .t2c-card-inner { border-color: var(--border2); }
+.t2c-method-card input:checked + .t2c-card-inner {
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+.t2c-card-icon { font-size: 22px; margin-bottom: 8px; }
+.t2c-card-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.t2c-card-desc { font-family: var(--mono); font-size: 10px; color: var(--text2); line-height: 1.5; }
+
+.t2c-delim-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg3);
+  transition: all .12s;
+}
+.t2c-delim-opt:hover { border-color: var(--border2); }
+.t2c-delim-opt input[type="checkbox"]:checked + * { color: var(--teal); }
+
+/* Preview table inside t2c */
+.t2c-preview-table {
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.t2c-preview-table th {
+  background: var(--bg4);
+  color: var(--text2);
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  font-size: 10px;
+  font-weight: 600;
+  position: sticky; top: 0;
+}
+.t2c-preview-table th.new-col { color: var(--teal); background: var(--teal-glow); border-color: rgba(0,212,170,0.3); }
+.t2c-preview-table th.orig-col { color: var(--text3); }
+.t2c-preview-table td {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+}
+.t2c-preview-table td.new-col { color: var(--teal); background: rgba(0,212,170,0.04); }
+.t2c-preview-table td.orig-col { color: var(--text3); background: rgba(0,0,0,0.2); }
+
+/* Fixed-width ruler */
+.t2c-ruler {
+  font-family: var(--mono);
+  font-size: 12px;
+  position: relative;
+  cursor: crosshair;
+  user-select: none;
+  line-height: 1.6;
+}
+.t2c-ruler-sample {
+  white-space: pre;
+  color: var(--text2);
+  background: var(--bg4);
+  padding: 4px 0;
+}
+.t2c-ruler-line {
+  white-space: pre;
+  color: var(--text3);
+  letter-spacing: 0;
+  pointer-events: none;
+}
+.t2c-break-marker {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--teal);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Split-column button on preview table headers */
+.split-col-btn {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(96,165,250,0.15);
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,0.3);
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all .12s;
+  white-space: nowrap;
+}
+.split-col-btn:hover {
+  background: rgba(96,165,250,0.3);
+  color: #93c5fd;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading overlay -->
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div id="loadingText">Processing file...</div>
+</div>
+
+<!-- Add Rule Modal -->
+<div class="modal-overlay" id="addRuleModal">
+  <div class="modal">
+    <div class="modal-title">➕ Add Classification Rule</div>
+    <div class="notice notice-info">💡 If narration <strong>contains</strong> the keyword, assign the ledger. Case-insensitive.</div>
+    <div class="form-row cols-2" style="margin-top:16px">
+      <div class="form-group">
+        <label>KEYWORD / PATTERN</label>
+        <input type="text" id="ruleKeyword" placeholder="e.g. UPI-AMAZON, SALARY, NEFT">
+      </div>
+      <div class="form-group">
+        <label>ASSIGN LEDGER</label>
+        <input type="text" id="ruleLedger" placeholder="e.g. Amazon Expenses">
+      </div>
+    </div>
+    <div class="form-row cols-2" style="margin-top:12px">
+      <div class="form-group">
+        <label>VOUCHER TYPE OVERRIDE (optional)</label>
+        <select id="ruleVoucher">
+          <option value="">Auto-detect</option>
+          <option value="Payment">Payment</option>
+          <option value="Receipt">Receipt</option>
+          <option value="Contra">Contra</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>PRIORITY (lower = higher priority)</label>
+        <input type="number" id="rulePriority" value="10" min="1" max="100">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addRuleModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRule()">💾 Save Rule</button>
+    </div>
+  </div>
+</div>
+
+<!-- Text to Columns Modal -->
+<div class="modal-overlay" id="t2cModal">
+  <div class="modal" style="max-width:860px;width:94vw;padding:0;display:flex;flex-direction:column;max-height:90vh;">
+
+    <!-- Header -->
+    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">✂️ Text to Columns</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:3px;">
+          Split column <span id="t2cColLabel" style="color:var(--teal);font-weight:700"></span> into multiple columns
+        </div>
+      </div>
+      <button onclick="closeModal('t2cModal')" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px 8px;">✕</button>
+    </div>
+
+    <!-- Step tabs inside modal -->
+    <div style="display:flex;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg3);">
+      <div class="t2c-step-tab active" id="t2cTab1" onclick="t2cGoStep(1)">
+        <span class="t2c-step-num">1</span> Choose Split Method
+      </div>
+      <div class="t2c-step-tab" id="t2cTab2" onclick="t2cGoStep(2)">
+        <span class="t2c-step-num">2</span> Set Delimiter / Width
+      </div>
+      <div class="t2c-step-tab" id="t2cTab3" onclick="t2cGoStep(3)">
+        <span class="t2c-step-num">3</span> Preview & Apply
+      </div>
+    </div>
+
+    <!-- Step 1: Choose method -->
+    <div class="t2c-panel active" id="t2cPanel1" style="padding:20px;flex:1;overflow-y:auto;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:16px;">How is the data currently merged in this column?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+        <label class="t2c-method-card">
+          <input type="radio" name="t2cMethod" value="delimiter" checked onchange="t2cMethodChange()">
+          <div class="t2c-card-inner">
+            <div class="t2c-card-icon">⚡</div>
+            <div class="t2c-card-title">Delimited</div>
+            <div class="t2c-card-desc">Columns are separated by a character like space, comma, pipe, or tab.<br><br>
+              Example: <code style="color:var(--teal)">01-Apr-24 UPI/AMAZON...</code></div>
+          </div>
+        </label>
+
+        <label class="t2c-method-card">
+          <input type="radio" name="t2cMethod" value="fixed" onchange="t2cMethodChange()">
+          <div class="t2c-card-inner">
+            <div class="t2c-card-icon">📏</div>
+            <div class="t2c-card-title">Fixed Width</div>
+            <div class="t2c-card-desc">Columns are aligned at fixed character positions (like old bank reports).<br><br>
+              Example: <code style="color:var(--teal)">01-04-2024&nbsp;&nbsp;&nbsp;UPI&nbsp;&nbsp;&nbsp;1500.00</code></div>
+          </div>
+        </label>
+
+        <label class="t2c-method-card">
+          <input type="radio" name="t2cMethod" value="datePrefix" onchange="t2cMethodChange()">
+          <div class="t2c-card-inner">
+            <div class="t2c-card-icon">📅</div>
+            <div class="t2c-card-title">Date + Text</div>
+            <div class="t2c-card-desc">Column starts with a date, rest is narration text. Auto-detected.<br><br>
+              Example: <code style="color:var(--teal)">01-Apr-24 UPI/MR RIYAZ...</code></div>
+          </div>
+        </label>
+
+        <label class="t2c-method-card">
+          <input type="radio" name="t2cMethod" value="regex" onchange="t2cMethodChange()">
+          <div class="t2c-card-inner">
+            <div class="t2c-card-icon">🔬</div>
+            <div class="t2c-card-title">Pattern (Regex)</div>
+            <div class="t2c-card-desc">Split using a custom regular expression for advanced formats.<br><br>
+              Example pattern: <code style="color:var(--teal)">\s{2,}</code> (2+ spaces)</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Step 2: Configure -->
+    <div class="t2c-panel" id="t2cPanel2" style="padding:20px;flex:1;overflow-y:auto;">
+
+      <!-- Delimiter options -->
+      <div id="t2cDelimiterOpts">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:12px;">Select delimiter character(s):</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimSpace" checked onchange="t2cUpdatePreview()"> Space</label>
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimComma" onchange="t2cUpdatePreview()"> Comma (,)</label>
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimTab" onchange="t2cUpdatePreview()"> Tab</label>
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimPipe" onchange="t2cUpdatePreview()"> Pipe (|)</label>
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimSlash" onchange="t2cUpdatePreview()"> Slash (/)</label>
+          <label class="t2c-delim-opt"><input type="checkbox" id="delimDash" onchange="t2cUpdatePreview()"> Dash (-)</label>
+          <label class="t2c-delim-opt">
+            <input type="checkbox" id="delimCustomCheck" onchange="t2cUpdatePreview()"> Other:
+            <input type="text" id="delimCustomVal" placeholder="e.g. ;  or  __" maxlength="10"
+              style="width:80px;margin-left:4px;padding:3px 6px;font-size:11px;"
+              oninput="document.getElementById('delimCustomCheck').checked=true;t2cUpdatePreview()">
+          </label>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+          <label class="t2c-delim-opt">
+            <input type="checkbox" id="delimMergeConsec" checked onchange="t2cUpdatePreview()">
+            Treat consecutive delimiters as one (e.g. multiple spaces = 1 split)
+          </label>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <label class="t2c-delim-opt">
+            <input type="checkbox" id="delimOnlyFirst" onchange="t2cUpdatePreview()">
+            Split only on <strong>first</strong> occurrence (keeps rest of text in one column)
+          </label>
+        </div>
+      </div>
+
+      <!-- Fixed width options -->
+      <div id="t2cFixedOpts" style="display:none;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:12px;">
+          Click on the ruler below to set column break points. Click again to remove.
+        </div>
+        <div id="t2cRulerWrap" style="overflow-x:auto;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px;"></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;">
+          Break positions: <span id="t2cBreakList" style="color:var(--teal)">none</span>
+          <button class="btn btn-secondary btn-sm" style="margin-left:12px" onclick="t2cClearBreaks()">Clear All</button>
+        </div>
+      </div>
+
+      <!-- Date-prefix options -->
+      <div id="t2cDatePrefixOpts" style="display:none;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:12px;">Auto-detect date prefix and split remainder as narration.</div>
+        <div style="margin-bottom:12px;">
+          <label style="font-size:11px;margin-bottom:4px;display:block;">Date format in this column:</label>
+          <select id="t2cDateFmt" onchange="t2cUpdatePreview()" style="width:220px;font-size:12px;">
+            <option value="auto">Auto-detect</option>
+            <option value="dmy_dash">DD-MMM-YY (e.g. 01-Apr-24)</option>
+            <option value="dmy_slash">DD/MM/YYYY (e.g. 01/04/2024)</option>
+            <option value="dmy_dashnum">DD-MM-YYYY (e.g. 01-04-2024)</option>
+            <option value="ymd">YYYY-MM-DD (e.g. 2024-04-01)</option>
+          </select>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);">
+          Result columns: <span style="color:var(--teal)">[Date]</span> and <span style="color:var(--teal)">[Narration]</span>
+        </div>
+      </div>
+
+      <!-- Regex options -->
+      <div id="t2cRegexOpts" style="display:none;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:12px;">Enter a regex pattern to split on:</div>
+        <input type="text" id="t2cRegexVal" value="\s{2,}" placeholder="e.g. \s{2,} or , or \| "
+          style="width:300px;font-family:var(--mono);font-size:13px;" oninput="t2cUpdatePreview()">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;">
+          Common patterns: <code style="color:var(--teal)">\s{2,}</code> = 2+ spaces &nbsp;|&nbsp;
+          <code style="color:var(--teal)">,\s*</code> = comma &nbsp;|&nbsp;
+          <code style="color:var(--teal)">\s+(?=\d)</code> = space before number
+        </div>
+        <div id="t2cRegexError" style="color:var(--red);font-family:var(--mono);font-size:11px;margin-top:6px;"></div>
+      </div>
+    </div>
+
+    <!-- Step 3: Preview -->
+    <div class="t2c-panel" id="t2cPanel3" style="padding:20px;flex:1;overflow-y:auto;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:10px;">
+        Split preview — <span id="t2cSplitCount" style="color:var(--teal)"></span>.
+        <strong style="color:var(--amber)">Existing mapped columns will shift — re-map after applying.</strong>
+      </div>
+      <div id="t2cPreviewTable" style="overflow-x:auto;"></div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;gap:10px;flex-wrap:wrap;">
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="t2cPrevBtn" onclick="t2cGoStep(Math.max(1,_t2cStep-1))" disabled>← Back</button>
+        <button class="btn btn-secondary btn-sm" id="t2cNextBtn" onclick="t2cGoStep(Math.min(3,_t2cStep+1))">Next →</button>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary" onclick="closeModal('t2cModal')">Cancel</button>
+        <button class="btn btn-primary" id="t2cApplyBtn" onclick="t2cApply()" disabled>✂️ Split & Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Column Map Modal -->
+<div class="modal-overlay" id="colMapModal">
+  <div class="modal" style="max-width:96vw;width:1100px;padding:0;display:flex;flex-direction:column;max-height:92vh;">
+
+    <!-- Modal header bar -->
+    <div style="padding:18px 24px 14px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">🗂️ Map Columns to Tally Fields</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text2);">
+        The table below shows your parsed data. <strong style="color:var(--teal)">Click any column header</strong> to assign it to the active field (highlighted in teal). Or use the dropdowns on the right.
+      </div>
+    </div>
+
+    <!-- Two-pane body -->
+    <div style="display:flex;flex:1;overflow:hidden;min-height:0;">
+
+      <!-- LEFT: Data preview -->
+      <div style="flex:1;overflow:auto;padding:16px;border-right:1px solid var(--border);min-width:0;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+          <span>📋 PARSED DATA PREVIEW</span>
+          <span id="previewRowCount" style="color:var(--text3)"></span>
+          <span style="margin-left:auto;color:var(--amber)">← Click a column header to map it</span>
+        </div>
+        <div id="dataPreviewTable" style="overflow-x:auto;"></div>
+
+        <!-- Header row selector -->
+        <div style="margin-top:12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text3);font-weight:700;letter-spacing:.5px">📐 DATA RANGE</div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text2);width:110px;flex-shrink:0;">Header row:</span>
+            <input type="number" id="headerRow" value="0" min="0" max="200"
+              style="width:60px;padding:4px 8px;font-size:12px;"
+              onchange="redetectHeader(this.value)">
+            <button class="btn btn-secondary btn-sm" onclick="redetectHeader('auto')">↺ Auto</button>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--text3)">0 = auto-detect</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text2);width:110px;flex-shrink:0;">Skip first N rows <span style="color:var(--text3)">(after header):</span></span>
+            <input type="number" id="dataSkipTop" value="0" min="0" max="50"
+              style="width:60px;padding:4px 8px;font-size:12px;"
+              onchange="renderPreviewTable()">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--text3)">skip account-info rows</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text2);width:110px;flex-shrink:0;">Skip last N rows <span style="color:var(--text3)">(before end):</span></span>
+            <input type="number" id="dataSkipBottom" value="0" min="0" max="50"
+              style="width:60px;padding:4px 8px;font-size:12px;"
+              onchange="renderPreviewTable()">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--text3)">skip totals/footer</span>
+          </div>
+
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text3)">
+            💡 Rows highlighted in <span style="color:var(--amber)">amber</span> = header &nbsp;|&nbsp;
+            <span style="color:var(--red)">red</span> = will be skipped
+          </div>
+        </div>
+
+        <!-- Split column option -->
+        <div style="margin-top:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text3);font-weight:700;letter-spacing:.5px;margin-bottom:8px">🔀 DATE+NARRATION MERGED?</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:8px;line-height:1.5">
+            If your date column also contains the narration (e.g. "01-Apr-24 UPI/AMAZON..."), enable auto-split:
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--text2)">
+            <input type="checkbox" id="autoSplitDateNarration" checked style="accent-color:var(--teal)">
+            Auto-split date from narration
+          </label>
+        </div>
+      </div>
+
+      <!-- RIGHT: Field mapping -->
+      <div style="width:300px;flex-shrink:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:4px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:8px;">TALLY FIELD → FILE COLUMN</div>
+        <div id="colMapperUI"></div>
+
+        <!-- Date format -->
+        <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+          <label style="font-size:10px;margin-bottom:4px;display:block;">DATE FORMAT</label>
+          <select id="dateFormat" style="font-size:11px;">
+            <option value="auto">Auto-detect</option>
+            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+            <option value="DD/MM/YY">DD/MM/YY</option>
+            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+            <option value="DD MMM YYYY">DD MMM YYYY</option>
+            <option value="DD-MMM-YYYY">DD-MMM-YYYY</option>
+            <option value="DD-MMM-YY">DD-MMM-YY</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div style="padding:12px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;gap:10px;flex-wrap:wrap;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text3)" id="colMapStatus"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary" onclick="closeModal('colMapModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="applyColumnMap()">✓ Apply & Process →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">&#8377;</div>
+      <div class="logo-text">TallyRepo <span>- Auto Entry</span></div>
+    </div>
+    <div class="header-meta">
+      <span class="badge" style="border-color:rgba(248,113,113,0.5);color:#f87171;background:rgba(248,113,113,0.1);animation:pulse-badge 2s infinite">&#x26A0; BETA</span>
+      <span class="badge">100% Free</span>
+      <span class="badge" style="border-color:rgba(52,211,153,0.3);color:var(--green);background:rgba(52,211,153,0.08)">No Backend</span>
+      <span class="badge" style="border-color:rgba(96,165,250,0.3);color:var(--blue);background:rgba(96,165,250,0.08)">Tally Prime Ready</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── STEPS ── -->
+<nav class="steps-bar">
+  <div class="steps-inner">
+    <div class="step-tab active" id="tab-1" onclick="goToStep(1)">
+      <div class="step-num">1</div><span>Upload & Parse</span>
+    </div>
+    <div class="step-tab" id="tab-2" onclick="goToStep(2)">
+      <div class="step-num">2</div><span>Preview & Edit</span>
+    </div>
+    <div class="step-tab" id="tab-3" onclick="goToStep(3)">
+      <div class="step-num">3</div><span>Classify Ledgers</span>
+    </div>
+    <div class="step-tab" id="tab-4" onclick="goToStep(4)">
+      <div class="step-num">4</div><span>Export</span>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- Beta Notice Banner -->
+<div style="background:linear-gradient(90deg,rgba(248,113,113,0.08),rgba(245,158,11,0.08));border:1px solid rgba(248,113,113,0.25);border-radius:var(--radius);padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <span style="font-size:16px">&#x26A0;&#xFE0F;</span>
+  <div style="flex:1;min-width:200px">
+    <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:#f87171;letter-spacing:0.5px;text-transform:uppercase">Beta Version – Under Testing</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-left:8px">TallyRepo Auto Entry is actively being developed. Features may change. Free to use during beta.</span>
+  </div>
+  <a href="https://github.com/tallyrepo" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:10px;color:var(--teal);text-decoration:none;border:1px solid rgba(0,212,170,0.3);padding:3px 10px;border-radius:4px;white-space:nowrap">&#9733; Star on GitHub</a>
+</div>
+
+<!-- SEO content (visually hidden, readable by search engines) -->
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap" aria-hidden="true">
+  <h1>TallyRepo – Auto Entry: Upload Bank Statement to Tally Automatically</h1>
+  <h2>Free Bank Statement to Tally XML Converter – Tally Prime and ERP 9</h2>
+  <p>TallyRepo Auto Entry is a free online tool to convert bank statements from SBI, HDFC, ICICI, Axis, Kotak, PNB into Tally Prime or Tally ERP 9 compatible XML voucher files. Upload your PDF or Excel bank statement and automatically generate Payment, Receipt, and Contra vouchers ready to import into Tally. No installation, no login, works offline in your browser.</p>
+  <ul>
+    <li>Upload bank statement to Tally automatically</li>
+    <li>Convert PDF bank statement to Tally XML</li>
+    <li>Convert Excel bank statement to Tally XML</li>
+    <li>Free Tally auto entry tool</li>
+    <li>Tally Prime XML import generator</li>
+    <li>Tally ERP 9 XML import generator</li>
+    <li>SBI bank statement to Tally</li>
+    <li>HDFC bank statement to Tally</li>
+    <li>ICICI bank statement to Tally</li>
+    <li>Axis bank statement to Tally</li>
+    <li>Automatic voucher classification Payment Receipt Contra</li>
+    <li>Ledger classification rules for Tally</li>
+    <li>Bank reconciliation tool for Tally</li>
+    <li>TallyRepo free accounting tool India</li>
+    <li>Beta version free to use</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     STEP 1: Upload & Parse
+════════════════════════════════════════════════ -->
+<div class="panel active" id="panel-1">
+  <div class="sample-bar">
+    <div style="font-family:var(--mono);font-size:12px;color:var(--text2)">
+      🧪 New here? Load sample data to explore all features instantly.
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-secondary btn-sm" onclick="loadDemoSBI()">SBI Sample</button>
+      <button class="btn btn-secondary btn-sm" onclick="loadDemoHDFC()">HDFC Sample</button>
+      <button class="btn btn-secondary btn-sm" onclick="loadDemoGeneric()">Generic CSV</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📁 Upload Bank Statement</div>
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".pdf,.xlsx,.xls,.csv" onchange="handleFileUpload(event)">
+      <span class="upload-icon">📂</span>
+      <div class="upload-title">Drop your bank statement here</div>
+      <div class="upload-sub">or click to browse files — processed entirely in your browser</div>
+      <div class="upload-formats">
+        <span class="fmt-tag">PDF</span>
+        <span class="fmt-tag">XLSX</span>
+        <span class="fmt-tag">XLS</span>
+        <span class="fmt-tag">CSV</span>
+      </div>
+    </div>
+    <div id="fileInfo" style="margin-top:12px;display:none" class="notice notice-ok">
+      <span>✓</span><span id="fileInfoText"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏦 Bank Preset</div>
+    <div class="notice notice-info">Select your bank for automatic column detection. Choose "Generic" to map columns manually.</div>
+    <div class="bank-grid" id="bankGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <div class="card" id="pdfOptionsCard" style="display:none">
+    <div class="card-title">📄 PDF Parsing Options</div>
+    <div class="form-row cols-3">
+      <div class="form-group">
+        <label>EXTRACTION METHOD</label>
+        <select id="pdfMethod">
+          <option value="text">Text Layer (fastest, digital PDFs)</option>
+          <option value="lines">Line-based (structured tables)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>SKIP HEADER ROWS</label>
+        <input type="number" id="pdfSkipRows" value="1" min="0" max="10">
+      </div>
+      <div class="form-group">
+        <label>SKIP FOOTER ROWS</label>
+        <input type="number" id="pdfSkipFooter" value="1" min="0" max="10">
+      </div>
+    </div>
+    <div class="notice notice-warn" style="margin-top:12px">
+      ⚠️ Scanned/image-based PDFs cannot be parsed in-browser. For scanned PDFs, convert to text using Google Lens, Adobe Scan, or the optional Python backend.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏢 Company Configuration</div>
+    <div class="company-row">
+      <div class="form-group">
+        <label>COMPANY NAME IN TALLY</label>
+        <input type="text" id="companyName" placeholder="e.g. ABC Enterprises" value="">
+      </div>
+      <div class="form-group">
+        <label>BANK LEDGER NAME IN TALLY</label>
+        <input type="text" id="bankLedgerName" placeholder="e.g. SBI Current Account" value="">
+      </div>
+      <div class="form-group">
+        <label>SUSPENSE / UNCLASSIFIED LEDGER</label>
+        <input type="text" id="suspenseLedger" value="Suspense Account" placeholder="Suspense Account">
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;gap:12px">
+    <button class="btn btn-primary" onclick="parseFile()" id="parseBtn" disabled>
+      ⚡ Parse Statement →
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     STEP 2: Preview & Edit
+════════════════════════════════════════════════ -->
+<div class="panel" id="panel-2">
+  <div class="stats-bar" id="statsBar">
+    <!-- filled by JS -->
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔎 Filter & Search</div>
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search narration..." style="max-width:260px" oninput="renderTable()">
+      <select id="filterType" onchange="renderTable()">
+        <option value="">All Transactions</option>
+        <option value="debit">Debits Only</option>
+        <option value="credit">Credits Only</option>
+        <option value="error">With Errors</option>
+        <option value="duplicate">Duplicates</option>
+        <option value="unassigned">Unassigned Ledger</option>
+      </select>
+      <select id="filterVoucher" onchange="renderTable()">
+        <option value="">All Voucher Types</option>
+        <option value="Payment">Payment</option>
+        <option value="Receipt">Receipt</option>
+        <option value="Contra">Contra</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" onclick="resetFilters()">✕ Clear</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Transactions</div>
+    <div class="bulk-bar">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1">
+        <span style="font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap">Bulk assign:</span>
+        <input type="text" id="bulkLedger" placeholder="Ledger name for selected rows..." style="max-width:220px">
+        <select id="bulkVoucher" style="max-width:140px">
+          <option value="">Keep auto</option>
+          <option value="Payment">Payment</option>
+          <option value="Receipt">Receipt</option>
+          <option value="Contra">Contra</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="bulkAssign()">✓ Apply to Checked</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-left:1px solid var(--border);padding-left:10px;margin-left:4px">
+        <button class="btn btn-secondary btn-sm" onclick="selectAll()">☑ All Visible</button>
+        <button class="btn btn-secondary btn-sm" onclick="deselectAll()">☐ None</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSelectedRows()" title="Permanently remove selected rows from the list">
+          🗑 Delete Selected
+        </button>
+      </div>
+    </div>
+
+    <!-- Opening Balance row for computed balance -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);flex-wrap:wrap">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap">&#128202; Opening Balance (&#8377;):</span>
+      <input type="number" id="openingBalanceInput" placeholder="Enter opening balance..." step="0.01"
+        style="max-width:180px;font-family:var(--mono);font-size:12px"
+        oninput="renderTable()" value="0">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">Balance column will be recalculated from this value using deposits &amp; withdrawals.</span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="txn-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAllCb" onchange="toggleSelectAll(this)"></th>
+            <th>#</th>
+            <th>DATE</th>
+            <th>NARRATION</th>
+            <th>USER NOTE</th>
+            <th>REF / CHQ</th>
+            <th>DEBIT (&#8377;)</th>
+            <th>CREDIT (&#8377;)</th>
+            <th>BALANCE (&#8377;)</th>
+            <th>VOUCHER</th>
+            <th>LEDGER</th>
+            <th>FLAGS</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="13" style="text-align:center;color:var(--text3);padding:40px;font-family:var(--mono)">Upload a file in Step 1 to see transactions here.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="paginationBar">
+      <span id="pageInfo"></span>
+      <div class="page-btns" id="pageBtns"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;gap:12px">
+    <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+    <button class="btn btn-primary" onclick="goToStep(3)">Classify Ledgers →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     STEP 3: Classify Ledgers
+════════════════════════════════════════════════ -->
+<div class="panel" id="panel-3">
+  <div class="card">
+    <div class="card-title">📐 Classification Rules</div>
+    <div class="notice notice-info">
+      Rules are matched in priority order against the narration field. Rules are saved in your browser's localStorage and persist across sessions.
+    </div>
+    <div class="btn-group" style="margin-bottom:16px">
+      <button class="btn btn-primary btn-sm" onclick="openModal('addRuleModal')">➕ Add Rule</button>
+      <button class="btn btn-secondary btn-sm" onclick="applyRulesToAll()">▶ Apply All Rules</button>
+      <button class="btn btn-secondary btn-sm" onclick="clearAllRules()">🗑 Clear All Rules</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportRules()">⬇ Export Rules</button>
+      <button class="btn btn-secondary btn-sm" onclick="importRulesClick()">⬆ Import Rules</button>
+      <input type="file" id="importRulesInput" accept=".json" style="display:none" onchange="importRules(event)">
+    </div>
+
+    <div id="rulesContainer">
+      <div style="text-align:center;color:var(--text3);padding:20px;font-family:var(--mono);font-size:12px">
+        No rules defined yet. Click "Add Rule" to start.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 Auto-Suggestions (from history)</div>
+    <div id="autoSuggest" style="font-family:var(--mono);font-size:12px;color:var(--text3)">
+      Apply rules and export at least once to generate suggestions.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Ledger Summary</div>
+    <div id="ledgerSummary" style="font-family:var(--mono);font-size:12px;color:var(--text3)">
+      Apply rules first to see summary.
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;gap:12px">
+    <button class="btn btn-secondary" onclick="goToStep(2)">← Back to Preview</button>
+    <button class="btn btn-primary" onclick="goToStep(4)">Go to Export →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     STEP 4: Export
+════════════════════════════════════════════════ -->
+<div class="panel" id="panel-4">
+  <div class="stats-bar" id="exportStatsBar"></div>
+
+  <div class="card">
+    <div class="card-title">⚙️ Export Settings</div>
+    <div class="form-row cols-3">
+      <div class="form-group">
+        <label>OPENING BALANCE ENTRY</label>
+        <select id="openingBalanceMode">
+          <option value="none">Skip</option>
+          <option value="contra">Include as Contra</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>DUPLICATE HANDLING</label>
+        <select id="dupHandling">
+          <option value="include">Include all</option>
+          <option value="skip">Skip duplicates</option>
+          <option value="flag">Flag in narration</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>NARRATION PREFIX</label>
+        <input type="text" id="narrationPrefix" placeholder="e.g. BankImport: " value="">
+      </div>
+    </div>
+  </div>
+
+  <div class="export-grid">
+    <!-- Excel Export -->
+    <div class="export-card">
+      <span class="export-icon">📊</span>
+      <div class="export-title">Excel / CSV Export</div>
+      <div class="export-desc">
+        Formatted spreadsheet with all fields.<br>
+        Compatible with Tally Excel import templates.<br>
+        Can be imported via TDL or third-party tools.
+      </div>
+      <div class="btn-group" style="justify-content:center">
+        <button class="btn btn-primary" onclick="exportExcel()">⬇ Download Excel</button>
+        <button class="btn btn-secondary" onclick="exportCSV()">⬇ Download CSV</button>
+      </div>
+    </div>
+
+    <!-- XML Export -->
+    <div class="export-card" style="border-color:rgba(245,158,11,0.2)">
+      <span class="export-icon">&#128452;</span>
+      <div class="export-title">Tally XML Export</div>
+      <div class="export-desc">
+        Structured Tally XML for direct voucher import.<br>
+        Direct import via <strong>Gateway &#8594; Import Data &#8594; Vouchers</strong>.<br>
+        Includes Payment, Receipt &amp; Contra vouchers.
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label style="font-size:11px">TALLY VERSION</label>
+        <select id="tallyVersionSelect" style="max-width:220px">
+          <option value="prime">Tally Prime (6.x / 5.x / 4.x)</option>
+          <option value="erp9">Tally ERP 9 (older)</option>
+        </select>
+      </div>
+      <div class="btn-group" style="justify-content:center">
+        <button class="btn btn-amber" onclick="exportTallyXML()">&#8595; Download Tally XML</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128214; Tally Import Instructions</div>
+    <div class="notice notice-info" style="flex-direction:column;gap:6px;align-items:flex-start">
+      <strong>For Tally Prime XML Import:</strong>
+      <ol style="padding-left:16px;line-height:2;font-size:11px">
+        <li>Open Tally Prime &#8594; Select your company</li>
+        <li>Go to <strong>Gateway of Tally &#8594; Import &#8594; Data</strong></li>
+        <li>Select <strong>Vouchers</strong></li>
+        <li>Browse and select the downloaded XML file</li>
+        <li>Review and confirm the import</li>
+      </ol>
+    </div>
+    <div class="notice notice-info" style="margin-top:8px;flex-direction:column;gap:6px;align-items:flex-start">
+      <strong>For Tally ERP 9 XML Import:</strong>
+      <ol style="padding-left:16px;line-height:2;font-size:11px">
+        <li>Open Tally ERP 9 &#8594; Select your company</li>
+        <li>Go to <strong>Gateway of Tally &#8594; Import of Data &#8594; Vouchers</strong></li>
+        <li>Enter the path of the downloaded XML file</li>
+        <li>Press Enter to import</li>
+      </ol>
+    </div>
+    <div class="notice notice-info" style="margin-top:8px;flex-direction:column;gap:6px;align-items:flex-start">
+      <strong>Pre-requisites (both versions):</strong>
+      <ul style="padding-left:16px;line-height:2;font-size:11px">
+        <li>Ledger accounts must already exist in Tally (or create them before import)</li>
+        <li>Ensure company name in XML matches your Tally company exactly</li>
+        <li>Suspense Account ledger should be under "Current Liabilities" or "Indirect Expenses"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;gap:12px">
+    <button class="btn btn-secondary" onclick="goToStep(3)">&#8592; Back to Classify</button>
+    <button class="btn btn-secondary" onclick="resetAll()">&#x1F504; Start Over</button>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══ SEO FOOTER ═══ -->
+<footer style="border-top:1px solid var(--border);background:var(--bg2);padding:24px;margin-top:0;text-align:center">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="margin-bottom:12px">
+      <span style="font-family:var(--sans);font-size:15px;font-weight:700;color:var(--text)">TallyRepo</span>
+      <span style="font-family:var(--sans);font-size:15px;color:var(--teal)"> – Auto Entry</span>
+      <span style="font-family:var(--mono);font-size:10px;color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:1px 6px;border-radius:4px;margin-left:8px">BETA</span>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);max-width:680px;margin:0 auto 12px">
+      Free tool to upload bank statement to Tally automatically. Convert SBI, HDFC, ICICI, Axis bank statements to Tally Prime or ERP 9 XML vouchers in seconds. No installation, no login, 100% browser-based.
+    </p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:12px">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">tallyrepo</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">tally auto entry</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">bank statement to tally</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">tally prime xml import</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">tally erp 9 import</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">free tally tool</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">upload bank statement tally</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px">automatic voucher entry</span>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--text3)">
+      MIT License &nbsp;·&nbsp; Free for personal &amp; commercial use &nbsp;·&nbsp; Beta – under active development
+    </p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT — Full Application
+════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ──────────────────────────────────────────────
+   PDF.js worker setup
+────────────────────────────────────────────── */
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+/* ──────────────────────────────────────────────
+   APPLICATION STATE
+────────────────────────────────────────────── */
+const AppState = {
+  rawTransactions: [],   // After parsing, before edits
+  transactions: [],       // Working set (editable)
+  detectedColumns: [],    // Columns from uploaded file
+  rawData: null,          // Raw 2D array from Excel/PDF
+  selectedBank: 'generic',
+  fileType: null,         // 'pdf' | 'excel' | 'csv'
+  fileName: '',
+  colMap: {},             // field → column index
+  currentPage: 1,
+  pageSize: 50,
+  rules: [],              // loaded from localStorage
+  history: {},            // keyword→ledger from localStorage
+};
+
+/* ──────────────────────────────────────────────
+   BANK PRESETS
+   Each preset defines column name patterns and date formats
+────────────────────────────────────────────── */
+const BANK_PRESETS = {
+  sbi: {
+    name: 'SBI',
+    logo: '🏦',
+    dateFormats: ['DD/MM/YYYY', 'DD-MM-YYYY'],
+    columns: {
+      date:      ['txn date', 'date', 'value date', 'trans date'],
+      narration: ['description', 'narration', 'particulars', 'details', 'remarks'],
+      ref:       ['ref', 'chq', 'cheque', 'reference', 'dd no'],
+      debit:     ['debit', 'withdrawal', 'dr', 'debit amount', 'withdrawal amt'],
+      credit:    ['credit', 'deposit', 'cr', 'credit amount', 'deposit amt'],
+      balance:   ['balance', 'closing balance', 'avl bal'],
+    }
+  },
+  hdfc: {
+    name: 'HDFC',
+    logo: '🏛️',
+    dateFormats: ['DD/MM/YY', 'DD/MM/YYYY', 'DD-MMM-YYYY'],
+    columns: {
+      date:      ['date', 'value dt'],
+      narration: ['narration', 'description', 'particulars'],
+      ref:       ['chq./ref.no.', 'ref no', 'cheque no', 'chq no'],
+      debit:     ['withdrawal amt(dr)', 'debit', 'withdrawal', 'dr'],
+      credit:    ['deposit amt(cr)', 'credit', 'deposit', 'cr'],
+      balance:   ['closing balance', 'balance'],
+    }
+  },
+  icici: {
+    name: 'ICICI',
+    logo: '🏢',
+    dateFormats: ['DD/MM/YYYY', 'DD-MMM-YYYY', 'YYYY-MM-DD'],
+    columns: {
+      date:      ['transaction date', 'value date', 'date'],
+      narration: ['description', 'narration', 'particulars', 'remarks'],
+      ref:       ['ref no./cheque no.', 'ref no', 'cheque no'],
+      debit:     ['debit', 'withdrawal', 'dr'],
+      credit:    ['credit', 'deposit', 'cr'],
+      balance:   ['balance', 'closing balance'],
+    }
+  },
+  axis: {
+    name: 'Axis',
+    logo: '🏗️',
+    dateFormats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'DD-MMM-YYYY'],
+    columns: {
+      date:      ['tran date', 'date', 'value date'],
+      narration: ['particulars', 'narration', 'description', 'remarks'],
+      ref:       ['chq no', 'ref no', 'reference', 'cheque no'],
+      debit:     ['debit', 'dr', 'withdrawal'],
+      credit:    ['credit', 'cr', 'deposit'],
+      balance:   ['balance', 'closing balance'],
+    }
+  },
+  kotak: {
+    name: 'Kotak',
+    logo: '🏬',
+    dateFormats: ['DD-MM-YYYY', 'DD/MM/YYYY'],
+    columns: {
+      date:      ['date', 'transaction date', 'value date'],
+      narration: ['description', 'narration', 'particulars'],
+      ref:       ['chq/ref number', 'ref no', 'cheque no'],
+      debit:     ['debit', 'withdrawal', 'dr'],
+      credit:    ['credit', 'deposit', 'cr'],
+      balance:   ['balance', 'closing balance'],
+    }
+  },
+  pnb: {
+    name: 'PNB',
+    logo: '🏦',
+    dateFormats: ['DD/MM/YYYY', 'DD-MM-YYYY'],
+    columns: {
+      date:      ['date', 'transaction date', 'txn date'],
+      narration: ['narration', 'description', 'particulars'],
+      ref:       ['cheque no', 'ref no', 'chq no'],
+      debit:     ['debit', 'dr', 'withdrawal'],
+      credit:    ['credit', 'cr', 'deposit'],
+      balance:   ['balance'],
+    }
+  },
+  generic: {
+    name: 'Generic',
+    logo: '⚙️',
+    dateFormats: ['auto'],
+    columns: {
+      date:      ['date', 'txn date', 'transaction date', 'value date', 'posting date'],
+      narration: ['narration', 'description', 'particulars', 'details', 'remark'],
+      ref:       ['ref', 'chq', 'reference', 'cheque', 'utr'],
+      debit:     ['debit', 'dr', 'withdrawal', 'amount dr', 'debit amt'],
+      credit:    ['credit', 'cr', 'deposit', 'amount cr', 'credit amt'],
+      balance:   ['balance', 'closing balance', 'running balance'],
+    }
+  }
+};
+
+/* ──────────────────────────────────────────────
+   STORAGE HELPERS
+────────────────────────────────────────────── */
+const Storage = {
+  KEY_RULES: 'tallyAutoEntry_rules_v2',
+  KEY_HISTORY: 'tallyAutoEntry_history_v2',
+  loadRules() {
+    try { return JSON.parse(localStorage.getItem(this.KEY_RULES) || '[]'); }
+    catch { return []; }
+  },
+  saveRules(rules) {
+    localStorage.setItem(this.KEY_RULES, JSON.stringify(rules));
+  },
+  loadHistory() {
+    try { return JSON.parse(localStorage.getItem(this.KEY_HISTORY) || '{}'); }
+    catch { return {}; }
+  },
+  saveHistory(h) {
+    localStorage.setItem(this.KEY_HISTORY, JSON.stringify(h));
+  },
+  learnFromExport(transactions) {
+    const h = this.loadHistory();
+    transactions.forEach(t => {
+      if (t.ledger && t.ledger !== (document.getElementById('suspenseLedger').value || 'Suspense Account')) {
+        // Save narration words → ledger mapping
+        const words = (t.narration || '').toUpperCase().split(/\s+/).filter(w => w.length > 3);
+        words.forEach(w => {
+          if (!h[w] || h[w].count < 999) {
+            if (!h[w]) h[w] = { ledger: t.ledger, count: 0 };
+            else if (h[w].ledger === t.ledger) h[w].count++;
+            else if (h[w].count < 2) h[w] = { ledger: t.ledger, count: 1 };
+          }
+        });
+      }
+    });
+    this.saveHistory(h);
+  }
+};
+
+/* ──────────────────────────────────────────────
+   DATE UTILS
+────────────────────────────────────────────── */
+const DateUtil = {
+  MONTHS: { jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12 },
+
+  parse(str) {
+    if (!str) return null;
+    const s = String(str).trim();
+
+    // Excel serial number
+    if (/^\d{5}$/.test(s)) {
+      const d = new Date(Math.round((+s - 25569) * 86400 * 1000));
+      if (!isNaN(d)) return d;
+    }
+
+    // DD/MM/YYYY or DD-MM-YYYY or DD.MM.YYYY
+    let m = s.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{2,4})$/);
+    if (m) {
+      const [,d,mo,y] = m;
+      return new Date(+y < 100 ? +y + 2000 : +y, +mo - 1, +d);
+    }
+
+    // YYYY-MM-DD
+    m = s.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+
+    // DD-MMM-YYYY or DD MMM YYYY
+    m = s.match(/^(\d{1,2})[\s\-]([a-zA-Z]{3})[\s\-](\d{2,4})$/);
+    if (m) {
+      const mo = this.MONTHS[m[2].toLowerCase()];
+      if (mo) return new Date(+m[3] < 100 ? +m[3] + 2000 : +m[3], mo - 1, +m[1]);
+    }
+
+    // Fallback
+    const d = new Date(s);
+    return isNaN(d) ? null : d;
+  },
+
+  format(d, fmt) {
+    if (!d || isNaN(d)) return '';
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    switch (fmt) {
+      case 'DD/MM/YYYY': return `${dd}/${mm}/${yyyy}`;
+      case 'YYYYMMDD':   return `${yyyy}${mm}${dd}`;
+      default:           return `${dd}/${mm}/${yyyy}`;
+    }
+  },
+
+  formatTally(d) {
+    // Tally uses YYYYMMDD
+    if (!(d instanceof Date) || isNaN(d.getTime())) return '';
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    return `${d.getFullYear()}${mm}${dd}`;
+  }
+};
+
+/* ──────────────────────────────────────────────
+   NUMBER UTILS
+────────────────────────────────────────────── */
+function parseAmount(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  if (typeof v === 'number') return v;
+  const s = String(v).replace(/[₹,\s]/g, '').replace(/\((.+)\)/, '-$1').trim();
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+function fmtAmt(n) {
+  if (!n && n !== 0) return '';
+  return Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+/* ──────────────────────────────────────────────
+   UI UTILITIES
+────────────────────────────────────────────── */
+function showLoading(msg) {
+  document.getElementById('loadingText').textContent = msg || 'Processing...';
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+function openModal(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  // Ensure t2cModal always appears above colMapModal
+  if (id === 't2cModal') el.style.zIndex = '1100';
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('open');
+  if (id === 't2cModal') el.style.zIndex = '';
+}
+
+function notify(msg, type = 'info') {
+  // type: info|warn|ok|err
+  const d = document.createElement('div');
+  d.className = `notice notice-${type}`;
+  d.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;max-width:360px;animation:fadeIn 0.3s';
+  d.innerHTML = `<span>${msg}</span>`;
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 3500);
+}
+
+/* ──────────────────────────────────────────────
+   STEP NAVIGATION
+────────────────────────────────────────────── */
+function goToStep(n) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`panel-${i}`).classList.toggle('active', i === n);
+    const tab = document.getElementById(`tab-${i}`);
+    tab.classList.toggle('active', i === n);
+    tab.classList.toggle('completed', i < n);
+  }
+  if (n === 3) { renderRules(); renderLedgerSummary(); renderAutoSuggest(); }
+  if (n === 4) { renderExportStats(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ──────────────────────────────────────────────
+   BANK GRID INIT
+────────────────────────────────────────────── */
+function initBankGrid() {
+  const grid = document.getElementById('bankGrid');
+  grid.innerHTML = Object.entries(BANK_PRESETS).map(([key, b]) => `
+    <div class="bank-card ${key === 'generic' ? 'selected' : ''}" onclick="selectBank('${key}')" id="bankCard-${key}">
+      <span class="bank-logo">${b.logo}</span>
+      <div class="bank-name">${b.name}</div>
+    </div>
+  `).join('');
+}
+
+function selectBank(key) {
+  AppState.selectedBank = key;
+  document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(`bankCard-${key}`).classList.add('selected');
+  autoMapColumns();
+}
+
+/* ──────────────────────────────────────────────
+   FILE UPLOAD HANDLER
+────────────────────────────────────────────── */
+function handleFileUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  handleFile(file);
+}
+
+// Drag & drop
+document.addEventListener('DOMContentLoaded', () => {
+  initBankGrid();
+  AppState.rules = Storage.loadRules();
+
+  const zone = document.getElementById('uploadZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+});
+
+function handleFile(file) {
+  const name = file.name.toLowerCase();
+  AppState.fileName = file.name;
+  if (name.endsWith('.pdf')) {
+    AppState.fileType = 'pdf';
+    document.getElementById('pdfOptionsCard').style.display = '';
+  } else {
+    AppState.fileType = name.endsWith('.csv') ? 'csv' : 'excel';
+    document.getElementById('pdfOptionsCard').style.display = 'none';
+  }
+  document.getElementById('fileInfo').style.display = '';
+  document.getElementById('fileInfoText').textContent = `${file.name} — ${(file.size / 1024).toFixed(1)} KB — ready to parse`;
+  document.getElementById('parseBtn').disabled = false;
+  AppState._file = file;
+}
+
+/* ──────────────────────────────────────────────
+   PARSE ENTRY POINT
+────────────────────────────────────────────── */
+async function parseFile() {
+  if (!AppState._file) { notify('Please upload a file first', 'warn'); return; }
+  showLoading('Parsing file...');
+  try {
+    if (AppState.fileType === 'pdf') {
+      await parsePDF(AppState._file);
+    } else {
+      await parseExcel(AppState._file);
+    }
+    autoMapColumns();
+    hideLoading(); // ← must hide BEFORE opening modal
+    // Always show column mapper so user can verify detected columns
+    buildColMapperUI();
+    openModal('colMapModal');
+  } catch (err) {
+    hideLoading();
+    notify('Parse error: ' + err.message, 'err');
+    console.error(err);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   PDF PARSER (PDF.js text extraction)
+   Handles: digital PDFs, column-based layouts,
+   multi-line narrations, varied bank formats.
+────────────────────────────────────────────── */
+async function parsePDF(file) {
+  // Guard: PDF.js must be loaded
+  if (typeof pdfjsLib === 'undefined') {
+    throw new Error('PDF.js library failed to load. Check your internet connection and try again, or upload an Excel/CSV file instead.');
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+
+  // Timeout wrapper — 30 seconds max for getDocument()
+  const pdfDoc = await Promise.race([
+    pdfjsLib.getDocument({ data: arrayBuffer }).promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('PDF load timed out (30s). The file may be password-protected or corrupted.')), 30000)
+    )
+  ]);
+
+  let totalItems = 0;
+  const allPageItems = []; // [{x, y, text, page}]
+
+  for (let p = 1; p <= pdfDoc.numPages; p++) {
+    showLoading(`Parsing PDF — page ${p} of ${pdfDoc.numPages}…`);
+    const page = await pdfDoc.getPage(p);
+    const content = await page.getTextContent({ normalizeWhitespace: true });
+
+    // Collect all text items with their positions
+    content.items.forEach(item => {
+      const text = (item.str || '').trim();
+      if (!text) return;
+      allPageItems.push({
+        x: Math.round(item.transform[4]),
+        y: Math.round(item.transform[5]),
+        text,
+        page: p,
+        // Invert Y so top of page = higher number (easier sorting)
+        yInv: p * 100000 - Math.round(item.transform[5]),
+      });
+      totalItems++;
+    });
+  }
+
+  if (totalItems === 0) {
+    throw new Error(
+      'This PDF has no extractable text — it is likely a scanned image. ' +
+      'Please download your statement as Excel/CSV from your bank\'s net banking portal, ' +
+      'or use the optional Python backend for OCR.'
+    );
+  }
+
+  // ── Cluster items into rows by Y position (tolerance: ±4px) ──
+  const ROW_TOLERANCE = 4;
+  const rows = [];
+  const usedIdx = new Set();
+
+  const sorted = [...allPageItems].sort((a, b) => a.yInv - b.yInv || a.x - b.x);
+
+  for (let i = 0; i < sorted.length; i++) {
+    if (usedIdx.has(i)) continue;
+    const anchor = sorted[i];
+    const rowItems = [anchor];
+    usedIdx.add(i);
+
+    for (let j = i + 1; j < sorted.length; j++) {
+      if (usedIdx.has(j)) continue;
+      if (sorted[j].page !== anchor.page) continue;
+      if (Math.abs(sorted[j].yInv - anchor.yInv) <= ROW_TOLERANCE) {
+        rowItems.push(sorted[j]);
+        usedIdx.add(j);
+      }
+    }
+
+    // Sort within row by X
+    rowItems.sort((a, b) => a.x - b.x);
+    rows.push(rowItems);
+  }
+
+  // ── Detect column X-boundaries using gap analysis ──
+  // Collect all X positions, find large gaps = column separators
+  const allX = allPageItems.map(i => i.x).sort((a, b) => a - b);
+  const colBoundaries = detectColumnBoundaries(allX);
+
+  // ── Convert rows of items → rows of cells (strings) ──
+  const tableRows = rows.map(rowItems => {
+    if (colBoundaries.length > 1) {
+      // Assign each item to a column bucket
+      const cells = new Array(colBoundaries.length).fill('');
+      rowItems.forEach(item => {
+        const colIdx = colBoundaries.findIndex((cx, i) =>
+          item.x >= cx && (i === colBoundaries.length - 1 || item.x < colBoundaries[i + 1])
+        );
+        if (colIdx >= 0) {
+          cells[colIdx] = cells[colIdx] ? cells[colIdx] + ' ' + item.text : item.text;
+        }
+      });
+      return cells.map(c => c.trim());
+    } else {
+      // Fallback: join all items in the row with space-gap splitting
+      return splitByGaps(rowItems);
+    }
+  });
+
+  // ── Filter: keep only rows with ≥ 2 non-empty cells ──
+  const filtered = tableRows.filter(row => row.filter(c => c.trim()).length >= 2);
+
+  if (filtered.length < 2) {
+    throw new Error(
+      'Could not detect a transaction table in this PDF. ' +
+      'The PDF may use an unusual layout. Please try downloading as Excel/CSV instead.'
+    );
+  }
+
+  AppState.rawData = filtered;
+}
+
+/**
+ * Detect natural column boundaries from sorted X positions.
+ * Looks for gaps larger than the median gap * 2.5.
+ */
+function detectColumnBoundaries(sortedX) {
+  if (sortedX.length < 4) return [sortedX[0] || 0];
+
+  // Get unique X positions
+  const unique = [...new Set(sortedX)];
+  if (unique.length < 3) return [unique[0]];
+
+  // Compute gaps between consecutive unique X values
+  const gaps = [];
+  for (let i = 1; i < unique.length; i++) {
+    gaps.push({ gap: unique[i] - unique[i - 1], pos: unique[i] });
+  }
+
+  // Median gap
+  const sorted = [...gaps].sort((a, b) => a.gap - b.gap);
+  const median = sorted[Math.floor(sorted.length / 2)].gap;
+  const threshold = Math.max(median * 2.5, 15); // minimum 15px gap
+
+  // Column boundaries = positions where a large gap starts
+  const boundaries = [unique[0]];
+  gaps.forEach(({ gap, pos }) => {
+    if (gap >= threshold) boundaries.push(pos);
+  });
+
+  return boundaries;
+}
+
+/**
+ * Split a sorted row of items into cells using X-coordinate gaps.
+ */
+function splitByGaps(rowItems) {
+  if (rowItems.length === 0) return [];
+  if (rowItems.length === 1) return [rowItems[0].text];
+
+  const cells = [];
+  let current = [rowItems[0].text];
+  let prevRight = rowItems[0].x + (rowItems[0].text.length * 5); // rough char width estimate
+
+  for (let i = 1; i < rowItems.length; i++) {
+    const gap = rowItems[i].x - prevRight;
+    if (gap > 18) { // 18px gap = new cell
+      cells.push(current.join(' ').trim());
+      current = [rowItems[i].text];
+    } else {
+      current.push(rowItems[i].text);
+    }
+    prevRight = rowItems[i].x + (rowItems[i].text.length * 5);
+  }
+  if (current.length) cells.push(current.join(' ').trim());
+  return cells;
+}
+
+/* ──────────────────────────────────────────────
+   EXCEL / CSV PARSER (SheetJS)
+────────────────────────────────────────────── */
+async function parseExcel(file) {
+  showLoading('Reading spreadsheet...');
+  const arrayBuffer = await file.arrayBuffer();
+  const wb = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', raw: false });
+
+  // Remove completely empty rows
+  AppState.rawData = data.filter(row => row.some(c => String(c).trim() !== ''));
+}
+
+/* ──────────────────────────────────────────────
+   COLUMN AUTO-MAPPING
+────────────────────────────────────────────── */
+function autoMapColumns() {
+  if (!AppState.rawData || AppState.rawData.length === 0) return;
+  const preset = BANK_PRESETS[AppState.selectedBank] || BANK_PRESETS.generic;
+
+  // Find header row: first row that has keyword matches
+  let headerRowIdx = 0;
+  let bestScore = 0;
+
+  for (let i = 0; i < Math.min(10, AppState.rawData.length); i++) {
+    const row = AppState.rawData[i];
+    let score = 0;
+    row.forEach(cell => {
+      const c = String(cell).toLowerCase().trim();
+      Object.values(preset.columns).forEach(aliases => {
+        if (aliases.some(a => c.includes(a) || a.includes(c))) score++;
+      });
+    });
+    if (score > bestScore) { bestScore = score; headerRowIdx = i; }
+  }
+
+  AppState.headerRowIdx = headerRowIdx;
+  const headerRow = AppState.rawData[headerRowIdx];
+  AppState.detectedColumns = headerRow.map(c => String(c).trim());
+
+  // Map fields to column indices
+  const colMap = {};
+  const headerLower = AppState.detectedColumns.map(c => c.toLowerCase());
+
+  for (const [field, aliases] of Object.entries(preset.columns)) {
+    for (const alias of aliases) {
+      const idx = headerLower.findIndex(h => h.includes(alias) || alias.includes(h));
+      if (idx >= 0 && !Object.values(colMap).includes(idx)) {
+        colMap[field] = idx;
+        break;
+      }
+    }
+  }
+  AppState.colMap = colMap;
+}
+
+/* ──────────────────────────────────────────────
+   COLUMN MAPPER UI
+────────────────────────────────────────────── */
+const FIELD_LABELS = {
+  date:      'Date',
+  narration: 'Narration',
+  ref:       'Ref / Cheque No',
+  debit:     'Debit (₹)',
+  credit:    'Credit (₹)',
+  balance:   'Balance (₹)',
+  amount:    'Amount (Dr-)',
+};
+
+/* ──────────────────────────────────────────────
+   COLUMN MAPPER UI — Interactive with live preview
+────────────────────────────────────────────── */
+let _activeField = null; // which field row is currently "focused"
+
+function buildColMapperUI() {
+  _activeField = null;
+  renderFieldRows();
+  renderPreviewTable();
+  updateColMapStatus();
+}
+
+/** Render the right-pane field→column rows */
+function renderFieldRows() {
+  const cols = AppState.detectedColumns;
+  const cm = AppState.colMap;
+
+  const html = Object.entries(FIELD_LABELS).map(([field, label]) => {
+    const mapped = cm[field] !== undefined ? cm[field] : -1;
+    const isMapped = mapped >= 0;
+
+    const options = [
+      `<option value="-1">— Skip —</option>`,
+      ...cols.map((c, i) => `<option value="${i}" ${i === mapped ? 'selected' : ''}>[${i}] ${c || '(empty)'}</option>`)
+    ].join('');
+
+    return `
+      <div class="field-map-row ${isMapped ? 'mapped' : ''}"
+           id="frow_${field}"
+           onclick="setActiveField('${field}')">
+        <span class="field-map-label">${label}</span>
+        <select class="field-map-select" id="cm_${field}"
+          onchange="onFieldSelectChange('${field}', this.value)"
+          onclick="event.stopPropagation()">
+          ${options}
+        </select>
+        <button class="field-map-clear" title="Clear" onclick="event.stopPropagation();clearFieldMap('${field}')">✕</button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('colMapperUI').innerHTML = html;
+}
+
+function setActiveField(field) {
+  _activeField = field;
+  // Highlight active row
+  document.querySelectorAll('.field-map-row').forEach(el => el.classList.remove('active-field'));
+  const row = document.getElementById(`frow_${field}`);
+  if (row) row.classList.add('active-field');
+  // Refresh preview to show active column highlight
+  renderPreviewTable();
+  updateColMapStatus();
+}
+
+function onFieldSelectChange(field, val) {
+  AppState.colMap[field] = parseInt(val);
+  // Re-render field rows (to update mapped style) and preview
+  renderFieldRows();
+  // Re-apply active highlight
+  if (_activeField) setActiveField(_activeField);
+  renderPreviewTable();
+  updateColMapStatus();
+}
+
+function clearFieldMap(field) {
+  AppState.colMap[field] = -1;
+  renderFieldRows();
+  renderPreviewTable();
+  updateColMapStatus();
+}
+
+/** Render the left-pane data preview table */
+function renderPreviewTable() {
+  const data = AppState.rawData;
+  if (!data || data.length === 0) {
+    document.getElementById('dataPreviewTable').innerHTML =
+      '<div style="color:var(--text3);font-family:var(--mono);font-size:12px;padding:20px">No data to preview.</div>';
+    return;
+  }
+
+  const PREVIEW_ROWS = 12; // show up to 12 rows
+  const headerIdx = AppState.headerRowIdx || 0;
+  const cols = AppState.detectedColumns;
+  const cm = AppState.colMap;
+  const numCols = Math.max(...data.slice(0, headerIdx + PREVIEW_ROWS + 1).map(r => r.length), cols.length);
+
+  // Read skip controls
+  const skipTop    = parseInt(document.getElementById('dataSkipTop')?.value  || 0);
+  const skipBottom = parseInt(document.getElementById('dataSkipBottom')?.value || 0);
+  // Absolute row indices that will be excluded
+  const dataStart  = headerIdx + 1 + skipTop;
+  const dataEnd    = data.length - skipBottom; // exclusive
+
+  // Find which col index is mapped to _activeField
+  const activeColIdx = _activeField !== undefined && cm[_activeField] !== undefined ? cm[_activeField] : -1;
+
+  // Build a reverse map: colIndex → [field, ...]
+  const colToFields = {};
+  Object.entries(cm).forEach(([field, idx]) => {
+    if (idx >= 0) {
+      if (!colToFields[idx]) colToFields[idx] = [];
+      colToFields[idx].push(FIELD_LABELS[field] || field);
+    }
+  });
+
+  // Table header row — column indices are clickable, with Split button
+  const thCells = Array.from({ length: numCols }, (_, ci) => {
+    const isMapped = colToFields[ci];
+    const isActive = ci === activeColIdx;
+    const cls = isActive ? 'col-header-active' : (isMapped ? 'col-header-mapped' : '');
+    const badgeHtml = isMapped && !isActive
+      ? `<span class="col-badge">${isMapped.join(', ')}</span>`
+      : (isActive ? `<span class="col-badge">← ${FIELD_LABELS[_activeField]}</span>` : '');
+    return `
+      <th class="${cls}">
+        <div onclick="clickColumnHeader(${ci})" title="Click to assign to active field" style="cursor:pointer">
+          <span class="col-idx">[${ci}]</span>
+          <span class="col-name">${escHtml(cols[ci] || '')}</span>
+          ${badgeHtml}
+        </div>
+        <span class="split-col-btn" onclick="event.stopPropagation();openT2C(${ci})" title="Text to Columns — split this column">✂ Split</span>
+      </th>`;
+  }).join('');
+
+  // Show rows: 3 before header for context, then up to PREVIEW_ROWS data rows, then last 3 for footer context
+  const ctxBefore = Math.max(0, headerIdx - 3);
+  const previewEnd = Math.min(data.length, dataStart + PREVIEW_ROWS);
+  // Also show last few rows so user can see footer
+  const showTail = skipBottom > 0
+    ? data.slice(Math.max(previewEnd, data.length - skipBottom - 2), data.length)
+    : [];
+  const rowsToShow = data.slice(ctxBefore, previewEnd);
+
+  function buildRow(row, actualIdx) {
+    const isHeaderRow  = actualIdx === headerIdx;
+    const isSkippedTop = actualIdx > headerIdx && actualIdx < dataStart;
+    const isSkippedBot = actualIdx >= dataEnd;
+
+    let rowBg = '';
+    let rowLabel;
+    if (isHeaderRow) {
+      rowBg = 'header-row';
+      rowLabel = `<td style="font-family:var(--mono);font-size:9px;color:var(--amber);padding:5px 6px;border:1px solid var(--border);white-space:nowrap;background:rgba(245,158,11,0.08)">→ HEADER</td>`;
+    } else if (isSkippedTop) {
+      rowBg = 'skipped-row';
+      rowLabel = `<td style="font-family:var(--mono);font-size:9px;color:var(--red);padding:5px 6px;border:1px solid var(--border);white-space:nowrap;background:rgba(248,113,113,0.06)">✕ SKIP</td>`;
+    } else if (isSkippedBot) {
+      rowBg = 'skipped-row';
+      rowLabel = `<td style="font-family:var(--mono);font-size:9px;color:var(--red);padding:5px 6px;border:1px solid var(--border);white-space:nowrap;background:rgba(248,113,113,0.06)">✕ SKIP</td>`;
+    } else {
+      rowLabel = `<td style="font-family:var(--mono);font-size:9px;color:var(--text3);padding:5px 6px;border:1px solid var(--border)">${actualIdx + 1}</td>`;
+    }
+
+    const cells = Array.from({ length: numCols }, (_, ci) => {
+      const isActive = ci === activeColIdx;
+      const cellBg   = isSkippedTop || isSkippedBot ? 'rgba(248,113,113,0.04)' : '';
+      const cls = isActive && !isSkippedTop && !isSkippedBot ? 'col-highlighted' : '';
+      const val = row[ci] !== undefined ? String(row[ci]) : '';
+      return `<td class="${cls}" title="${escHtml(val)}"
+        style="${cellBg ? `background:${cellBg};color:var(--text3);` : ''}"
+      >${escHtml(val.length > 32 ? val.substring(0, 32) + '…' : val)}</td>`;
+    }).join('');
+
+    return `<tr class="${rowBg}">${rowLabel}${cells}</tr>`;
+  }
+
+  const bodyRows = rowsToShow.map((row, ri) => buildRow(row, ctxBefore + ri)).join('');
+
+  // Separator + tail rows if skipping footer
+  let tailRows = '';
+  if (showTail.length > 0) {
+    tailRows = `<tr><td colspan="${numCols + 1}" style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text3);padding:4px;background:var(--bg4)">⋯ ${data.length - previewEnd - showTail.length} rows hidden ⋯</td></tr>`;
+    tailRows += showTail.map((row, ri) => buildRow(row, data.length - showTail.length + ri)).join('');
+  }
+
+  document.getElementById('dataPreviewTable').innerHTML = `
+    <table class="preview-table">
+      <thead>
+        <tr>
+          <th style="cursor:default"><span class="col-idx" style="font-size:9px">#</span><span class="col-name">Row</span></th>
+          ${thCells}
+        </tr>
+      </thead>
+      <tbody>${bodyRows}${tailRows}</tbody>
+    </table>
+  `;
+
+  // Update row count
+  const totalDataRows = Math.max(0, dataEnd - dataStart);
+  document.getElementById('previewRowCount').textContent =
+    `${data.length} raw rows · ${totalDataRows} will be imported · ${numCols} columns detected`;
+}
+
+/** When a column header is clicked in the preview table */
+function clickColumnHeader(colIdx) {
+  if (!_activeField) {
+    // If no field is active, pick the first unmapped one
+    const firstUnmapped = Object.keys(FIELD_LABELS).find(f =>
+      AppState.colMap[f] === undefined || AppState.colMap[f] < 0
+    );
+    if (firstUnmapped) {
+      _activeField = firstUnmapped;
+    } else {
+      notify('Click a field on the right first, then click a column to assign it.', 'info');
+      return;
+    }
+  }
+  AppState.colMap[_activeField] = colIdx;
+  // Auto-advance to next unmapped field
+  const fields = Object.keys(FIELD_LABELS);
+  const curIdx = fields.indexOf(_activeField);
+  const nextUnmapped = fields.slice(curIdx + 1).find(f =>
+    AppState.colMap[f] === undefined || AppState.colMap[f] < 0
+  );
+
+  renderFieldRows();
+  if (nextUnmapped) {
+    setActiveField(nextUnmapped);
+  } else {
+    _activeField = null;
+    document.querySelectorAll('.field-map-row').forEach(el => el.classList.remove('active-field'));
+    renderPreviewTable();
+  }
+  updateColMapStatus();
+  notify(`Column [${colIdx}] → ${FIELD_LABELS[_activeField || fields[curIdx]]}`, 'ok');
+}
+
+/* ══════════════════════════════════════════════════
+   TEXT TO COLUMNS ENGINE
+   Splits one rawData column into 2+ columns in-place
+══════════════════════════════════════════════════ */
+let _t2cColIdx = -1;   // which column index is being split
+let _t2cStep   = 1;    // current wizard step (1-3)
+let _t2cBreaks = [];   // fixed-width break positions (char indices)
+let _t2cResult = null; // computed split result: [{name, values[]}]
+
+/** Open T2C wizard for a given column */
+function openT2C(colIdx) {
+  _t2cColIdx = colIdx;
+  _t2cStep   = 1;
+  _t2cBreaks = [];
+  _t2cResult = null;
+
+  const colName = AppState.detectedColumns[colIdx] || `Column ${colIdx}`;
+  document.getElementById('t2cColLabel').textContent = `[${colIdx}] "${colName}"`;
+
+  // Reset wizard to step 1
+  t2cGoStep(1);
+  openModal('t2cModal');
+  // Build fixed-width ruler with sample data
+  t2cBuildRuler();
+}
+
+function t2cGoStep(n) {
+  _t2cStep = n;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`t2cPanel${i}`).classList.toggle('active', i === n);
+    document.getElementById(`t2cTab${i}`).classList.toggle('active', i === n);
+  }
+  document.getElementById('t2cPrevBtn').disabled = n === 1;
+  document.getElementById('t2cNextBtn').disabled = n === 3;
+  document.getElementById('t2cApplyBtn').disabled = n !== 3;
+
+  // Show/hide method-specific options in step 2
+  if (n === 2) t2cMethodChange();
+  // Build preview when reaching step 3
+  if (n === 3) t2cUpdatePreview();
+}
+
+function t2cMethodChange() {
+  const method = document.querySelector('input[name="t2cMethod"]:checked')?.value || 'delimiter';
+  document.getElementById('t2cDelimiterOpts').style.display  = method === 'delimiter'  ? '' : 'none';
+  document.getElementById('t2cFixedOpts').style.display      = method === 'fixed'       ? '' : 'none';
+  document.getElementById('t2cDatePrefixOpts').style.display = method === 'datePrefix'  ? '' : 'none';
+  document.getElementById('t2cRegexOpts').style.display      = method === 'regex'       ? '' : 'none';
+  if (method === 'fixed') t2cBuildRuler();
+  t2cUpdatePreview();
+}
+
+/** Get sample values (first ~8 non-empty data rows) from the target column */
+function t2cGetSamples(max = 8) {
+  const data = AppState.rawData;
+  const hdr  = AppState.headerRowIdx || 0;
+  const samples = [];
+  for (let i = hdr + 1; i < data.length && samples.length < max; i++) {
+    const val = data[i][_t2cColIdx];
+    if (val !== undefined && String(val).trim()) samples.push(String(val));
+  }
+  return samples;
+}
+
+/** Core split function — returns array of arrays (one per sample row) */
+function t2cSplitValue(val) {
+  const method = document.querySelector('input[name="t2cMethod"]:checked')?.value || 'delimiter';
+  const str    = String(val || '');
+
+  if (method === 'delimiter') {
+    const mergeConsec = document.getElementById('delimMergeConsec')?.checked;
+    const onlyFirst   = document.getElementById('delimOnlyFirst')?.checked;
+
+    // Build regex from checked delimiters
+    const chars = [];
+    if (document.getElementById('delimSpace')?.checked)       chars.push(' ');
+    if (document.getElementById('delimComma')?.checked)       chars.push(',');
+    if (document.getElementById('delimTab')?.checked)         chars.push('\t');
+    if (document.getElementById('delimPipe')?.checked)        chars.push('\\|');
+    if (document.getElementById('delimSlash')?.checked)       chars.push('/');
+    if (document.getElementById('delimDash')?.checked)        chars.push('-');
+    const custom = document.getElementById('delimCustomVal')?.value;
+    if (document.getElementById('delimCustomCheck')?.checked && custom) {
+      chars.push(custom.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    }
+    if (chars.length === 0) return [str];
+
+    const pattern = `[${chars.join('')}]`;
+    const re = new RegExp(mergeConsec ? `${pattern}+` : pattern, onlyFirst ? '' : 'g');
+
+    if (onlyFirst) {
+      const m = str.match(re);
+      if (!m) return [str];
+      const idx = str.search(re);
+      const sepLen = m[0].length;
+      return [str.slice(0, idx).trim(), str.slice(idx + sepLen).trim()];
+    }
+    return str.split(re).map(s => s.trim()).filter((s, i, a) => s || i < a.length - 1);
+  }
+
+  if (method === 'fixed') {
+    if (_t2cBreaks.length === 0) return [str];
+    const breaks = [..._t2cBreaks].sort((a, b) => a - b);
+    const parts = [];
+    let prev = 0;
+    for (const bp of breaks) {
+      parts.push(str.slice(prev, bp).trim());
+      prev = bp;
+    }
+    parts.push(str.slice(prev).trim());
+    return parts;
+  }
+
+  if (method === 'datePrefix') {
+    const fmt = document.getElementById('t2cDateFmt')?.value || 'auto';
+    const patterns = {
+      auto:        /^(\d{1,2}[-\/]\w{2,4}[-\/]\d{2,4}|\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}|\d{4}[-\/]\d{2}[-\/]\d{2})\s+([\s\S]+)$/,
+      dmy_dash:    /^(\d{1,2}-[A-Za-z]{3}-\d{2,4})\s+([\s\S]+)$/,
+      dmy_slash:   /^(\d{1,2}\/\d{1,2}\/\d{2,4})\s+([\s\S]+)$/,
+      dmy_dashnum: /^(\d{1,2}-\d{1,2}-\d{2,4})\s+([\s\S]+)$/,
+      ymd:         /^(\d{4}-\d{2}-\d{2})\s+([\s\S]+)$/,
+    };
+    const re = patterns[fmt] || patterns.auto;
+    const m  = str.match(re);
+    return m ? [m[1].trim(), m[2].trim()] : [str, ''];
+  }
+
+  if (method === 'regex') {
+    const pat = document.getElementById('t2cRegexVal')?.value || '\\s{2,}';
+    document.getElementById('t2cRegexError').textContent = '';
+    try {
+      const re = new RegExp(pat);
+      return str.split(re).map(s => s.trim());
+    } catch (e) {
+      document.getElementById('t2cRegexError').textContent = 'Invalid regex: ' + e.message;
+      return [str];
+    }
+  }
+  return [str];
+}
+
+/** Compute max columns from splitting all samples */
+function t2cComputeMaxCols(samples) {
+  return Math.max(...samples.map(s => t2cSplitValue(s).length), 1);
+}
+
+/** Update the preview table in step 3 */
+function t2cUpdatePreview() {
+  const samples = t2cGetSamples(10);
+  if (samples.length === 0) {
+    document.getElementById('t2cPreviewTable').innerHTML =
+      '<div style="color:var(--text3);font-family:var(--mono);font-size:12px">No data found in this column.</div>';
+    return;
+  }
+
+  const splitResults = samples.map(s => t2cSplitValue(s));
+  const maxNewCols   = Math.max(...splitResults.map(r => r.length), 1);
+  const colName      = AppState.detectedColumns[_t2cColIdx] || `Col${_t2cColIdx}`;
+
+  // Build suggested names for new columns
+  const newNames = Array.from({ length: maxNewCols }, (_, i) => `${colName}_${i + 1}`);
+
+  document.getElementById('t2cSplitCount').textContent =
+    `${maxNewCols} new column(s) from "${colName}"`;
+
+  // Header row: original columns (greyed) + new split columns (teal)
+  const origCols = AppState.detectedColumns;
+  const headerCells = [
+    `<th class="orig-col" style="min-width:30px">#</th>`,
+    ...origCols.map((c, ci) => {
+      if (ci === _t2cColIdx) {
+        // Show split columns in place
+        return newNames.map((n, ni) =>
+          `<th class="new-col" title="New: split from [${ci}]">✂ ${escHtml(n)}</th>`
+        ).join('');
+      }
+      return `<th class="orig-col">[${ci}] ${escHtml(c)}</th>`;
+    }).join('')
+  ].join('');
+
+  // Data rows preview (show first 10 raw data rows)
+  const data  = AppState.rawData;
+  const hdr   = AppState.headerRowIdx || 0;
+  const previewRows = data.slice(hdr + 1, hdr + 11);
+
+  const bodyRows = previewRows.map((row, ri) => {
+    const cells = origCols.map((_, ci) => {
+      if (ci === _t2cColIdx) {
+        const parts = t2cSplitValue(row[ci] !== undefined ? String(row[ci]) : '');
+        return newNames.map((_, ni) => {
+          const v = parts[ni] !== undefined ? parts[ni] : '';
+          return `<td class="new-col" title="${escHtml(v)}">${escHtml(v.length > 30 ? v.slice(0, 30) + '…' : v)}</td>`;
+        }).join('');
+      }
+      const v = row[ci] !== undefined ? String(row[ci]) : '';
+      return `<td class="orig-col" title="${escHtml(v)}">${escHtml(v.length > 25 ? v.slice(0, 25) + '…' : v)}</td>`;
+    }).join('');
+    return `<tr><td class="orig-col" style="color:var(--text3);font-size:10px">${hdr + 1 + ri + 1}</td>${cells}</tr>`;
+  }).join('');
+
+  document.getElementById('t2cPreviewTable').innerHTML = `
+    <table class="t2c-preview-table">
+      <thead><tr>${headerCells}</tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table>
+  `;
+
+  _t2cResult = { maxNewCols, newNames, colName };
+}
+
+/** Apply the split to AppState.rawData — mutates in place */
+function t2cApply() {
+  if (!_t2cResult) { notify('Preview the split first (Step 3)', 'warn'); return; }
+  const { maxNewCols, newNames } = _t2cResult;
+  const ci = _t2cColIdx;
+
+  // Process every row in rawData
+  AppState.rawData = AppState.rawData.map((row, ri) => {
+    const newRow = [];
+    // Columns before the split column
+    for (let i = 0; i < ci; i++) newRow.push(row[i] !== undefined ? row[i] : '');
+
+    // Split values — pad to maxNewCols
+    const isHeader = ri === AppState.headerRowIdx;
+    if (isHeader) {
+      // Put generated names in header
+      const baseName = AppState.detectedColumns[ci] || `Col${ci}`;
+      for (let k = 0; k < maxNewCols; k++) newRow.push(`${baseName}_${k + 1}`);
+    } else {
+      const parts = t2cSplitValue(row[ci] !== undefined ? String(row[ci]) : '');
+      for (let k = 0; k < maxNewCols; k++) newRow.push(parts[k] !== undefined ? parts[k] : '');
+    }
+
+    // Columns after the split column
+    for (let i = ci + 1; i < row.length; i++) newRow.push(row[i] !== undefined ? row[i] : '');
+    return newRow;
+  });
+
+  // Shift all colMap indices that are > ci by (maxNewCols - 1)
+  const shift = maxNewCols - 1;
+  if (shift > 0) {
+    Object.keys(AppState.colMap).forEach(f => {
+      if (AppState.colMap[f] > ci) AppState.colMap[f] += shift;
+    });
+  }
+  // The split column itself is now split — clear its old mapping
+  Object.keys(AppState.colMap).forEach(f => {
+    if (AppState.colMap[f] === ci) AppState.colMap[f] = -1;
+  });
+
+  // Update detected columns header
+  AppState.detectedColumns = AppState.rawData[AppState.headerRowIdx]
+    ? AppState.rawData[AppState.headerRowIdx].map(c => String(c).trim())
+    : AppState.detectedColumns;
+
+  closeModal('t2cModal');
+  // Rebuild mapper UI with new columns
+  renderFieldRows();
+  renderPreviewTable();
+  updateColMapStatus();
+
+  notify(`✂️ Split into ${maxNewCols} columns! Re-map the new columns below.`, 'ok');
+}
+
+/* ── Fixed-width ruler builder ── */
+function t2cBuildRuler() {
+  const samples = t2cGetSamples(5);
+  if (!samples.length) return;
+  const longest = samples.reduce((a, b) => a.length > b.length ? a : b, '');
+
+  // Generate ruler scale
+  const len = Math.min(longest.length + 5, 120);
+  const rulerNums = Array.from({ length: len }, (_, i) => (i % 10 === 0) ? String(i).padEnd(10, ' ') : '').join('');
+  const rulerTick = Array.from({ length: len }, (_, i) => i % 10 === 0 ? '|' : (i % 5 === 0 ? '+' : '·')).join('');
+
+  const sampleLines = samples.slice(0, 5).map(s =>
+    `<div class="t2c-ruler-sample" data-raw="${escHtml(s)}">${escHtml(s.padEnd(len))}</div>`
+  ).join('');
+
+  const wrap = document.getElementById('t2cRulerWrap');
+  wrap.innerHTML = `
+    <div class="t2c-ruler" id="t2cRuler" onclick="t2cRulerClick(event)">
+      <div class="t2c-ruler-line" style="color:var(--teal);opacity:0.5;font-size:10px">${escHtml(rulerNums)}</div>
+      <div class="t2c-ruler-line" style="color:var(--teal);opacity:0.4;font-size:10px">${escHtml(rulerTick)}</div>
+      ${sampleLines}
+      <div id="t2cBreakMarkers"></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:6px">
+      Click on the sample rows above to place column break points (↕ lines).
+    </div>
+  `;
+  t2cRenderBreakMarkers();
+}
+
+function t2cRulerClick(e) {
+  const ruler = document.getElementById('t2cRuler');
+  const rect  = ruler.getBoundingClientRect();
+  // Measure char width using first sample line
+  const sampleEl = ruler.querySelector('.t2c-ruler-sample');
+  if (!sampleEl) return;
+  const charW = sampleEl.getBoundingClientRect().width / (sampleEl.dataset.raw?.length || 80);
+  const charPos = Math.round((e.clientX - rect.left) / charW);
+
+  const existing = _t2cBreaks.indexOf(charPos);
+  if (existing >= 0) _t2cBreaks.splice(existing, 1);
+  else _t2cBreaks.push(charPos);
+
+  t2cRenderBreakMarkers();
+  const breakList = document.getElementById('t2cBreakList');
+  if (breakList) breakList.textContent = _t2cBreaks.length ? [..._t2cBreaks].sort((a,b)=>a-b).join(', ') : 'none';
+  t2cUpdatePreview();
+}
+
+function t2cRenderBreakMarkers() {
+  const ruler   = document.getElementById('t2cRuler');
+  const markers = document.getElementById('t2cBreakMarkers');
+  if (!ruler || !markers) return;
+  const sampleEl = ruler.querySelector('.t2c-ruler-sample');
+  if (!sampleEl) return;
+  const charW = sampleEl.getBoundingClientRect().width / Math.max(sampleEl.dataset.raw?.length || 80, 1);
+
+  markers.innerHTML = _t2cBreaks.map(bp => {
+    const left = bp * charW;
+    return `<div class="t2c-break-marker" style="left:${left}px"></div>`;
+  }).join('');
+}
+
+function t2cClearBreaks() {
+  _t2cBreaks = [];
+  t2cRenderBreakMarkers();
+  const breakList = document.getElementById('t2cBreakList');
+  if (breakList) breakList.textContent = 'none';
+  t2cUpdatePreview();
+}
+
+function redetectHeader(val) {
+  if (val === 'auto') {
+    autoMapColumns(); // re-runs detection
+  } else {
+    const n = parseInt(val);
+    if (!isNaN(n) && n >= 0 && n < (AppState.rawData || []).length) {
+      AppState.headerRowIdx = n;
+      const headerRow = AppState.rawData[n];
+      AppState.detectedColumns = headerRow.map(c => String(c).trim());
+      autoMapColumnsByPreset();
+    }
+  }
+  renderFieldRows();
+  renderPreviewTable();
+  updateColMapStatus();
+}
+
+function autoMapColumnsByPreset() {
+  const preset = BANK_PRESETS[AppState.selectedBank] || BANK_PRESETS.generic;
+  const headerLower = AppState.detectedColumns.map(c => c.toLowerCase());
+  const colMap = {};
+  for (const [field, aliases] of Object.entries(preset.columns)) {
+    for (const alias of aliases) {
+      const idx = headerLower.findIndex(h => h.includes(alias) || alias.includes(h));
+      if (idx >= 0 && !Object.values(colMap).includes(idx)) {
+        colMap[field] = idx; break;
+      }
+    }
+  }
+  AppState.colMap = colMap;
+}
+
+function updateColMapStatus() {
+  const el = document.getElementById('colMapStatus');
+  if (!el) return;
+  const cm = AppState.colMap;
+  const hasDate = cm.date >= 0;
+  const hasAmount = cm.debit >= 0 || cm.credit >= 0 || cm.amount >= 0;
+  const mapped = Object.values(cm).filter(v => v >= 0).length;
+
+  if (_activeField) {
+    el.innerHTML = `<span style="color:var(--teal)">▶ Click a column header in the preview to assign to <strong>${FIELD_LABELS[_activeField]}</strong></span>`;
+  } else if (!hasDate) {
+    el.innerHTML = `<span style="color:var(--amber)">⚠ Date field is required — click a field row, then click its column.</span>`;
+  } else if (!hasAmount) {
+    el.innerHTML = `<span style="color:var(--amber)">⚠ At least one of Debit / Credit / Amount is required.</span>`;
+  } else {
+    el.innerHTML = `<span style="color:var(--green)">✓ ${mapped} fields mapped — ready to process.</span>`;
+  }
+}
+
+function applyColumnMap() {
+  // Sync select values into AppState.colMap
+  for (const field of Object.keys(FIELD_LABELS)) {
+    const el = document.getElementById(`cm_${field}`);
+    if (el) AppState.colMap[field] = parseInt(el.value);
+  }
+
+  // Validate minimum requirements
+  const cm = AppState.colMap;
+  if (cm.date === undefined || cm.date < 0) {
+    notify('⚠ Please map the Date field before proceeding.', 'warn');
+    if (!_activeField) setActiveField('date');
+    return;
+  }
+  if ((cm.debit === undefined || cm.debit < 0) &&
+      (cm.credit === undefined || cm.credit < 0) &&
+      (cm.amount === undefined || cm.amount < 0)) {
+    notify('⚠ Please map at least one of: Debit, Credit, or Amount.', 'warn');
+    return;
+  }
+
+  closeModal('colMapModal');
+  buildTransactions();
+}
+
+/* ──────────────────────────────────────────────
+   BUILD TRANSACTIONS from raw data
+────────────────────────────────────────────── */
+function buildTransactions() {
+  showLoading('Building transaction list...');
+  const cm = AppState.colMap;
+
+  // Use the skip controls from the mapper modal
+  const skipTop    = parseInt(document.getElementById('dataSkipTop')?.value    || document.getElementById('pdfSkipRows')?.value    || 0);
+  const skipBottom = parseInt(document.getElementById('dataSkipBottom')?.value || document.getElementById('pdfSkipFooter')?.value  || 0);
+  const autoSplit  = document.getElementById('autoSplitDateNarration')?.checked !== false; // default true
+
+  const allDataRows = AppState.rawData.slice(AppState.headerRowIdx + 1);
+  const dataRows = allDataRows.slice(skipTop, skipBottom > 0 ? -skipBottom : undefined);
+
+  // Date pattern detector for auto-split (handles DD-MMM-YY, DD/MM/YYYY, DD-MM-YYYY etc.)
+  const DATE_PREFIX_RE = /^(\d{1,2}[-\/]\w{2,3}[-\/]\d{2,4}|\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\s+(.+)$/;
+
+  const txns = [];
+  dataRows.forEach((row, i) => {
+    const get = (field) => {
+      const idx = cm[field];
+      if (idx === undefined || idx < 0) return '';
+      return row[idx] !== undefined ? String(row[idx]).trim() : '';
+    };
+
+    let dateStr   = get('date');
+    let narration = get('narration');
+    const ref     = get('ref');
+    let debit     = parseAmount(get('debit'));
+    let credit    = parseAmount(get('credit'));
+    const balance = parseAmount(get('balance'));
+    const amountRaw = get('amount');
+
+    // ── Auto-split date+narration if they came merged in one column ──
+    if (autoSplit && dateStr && !narration) {
+      const m = dateStr.match(DATE_PREFIX_RE);
+      if (m) {
+        dateStr   = m[1].trim();
+        narration = m[2].trim();
+      }
+    }
+    // Also handle: narration column accidentally has date prefix repeated
+    if (autoSplit && narration) {
+      const m = narration.match(DATE_PREFIX_RE);
+      if (m && !dateStr) {
+        dateStr   = m[1].trim();
+        narration = m[2].trim();
+      }
+    }
+
+    // If only "amount" column: negative = debit, positive = credit
+    if (cm.amount >= 0 && !(cm.debit >= 0) && !(cm.credit >= 0)) {
+      const a = parseAmount(amountRaw);
+      if (a < 0) debit = Math.abs(a);
+      else credit = a;
+    }
+
+    // Skip completely blank rows
+    if (!dateStr && !narration && debit === 0 && credit === 0) return;
+
+    // Skip obvious summary/footer rows (user can also delete from table)
+    if (/^(total|closing balance|opening balance|grand total|sub total|net total|sweep td|total withdrawal|total deposit)/i.test((narration || dateStr || '').trim())) return;
+
+    // Skip rows where the "date" field is clearly not a date and there's no amount
+    const date = DateUtil.parse(dateStr);
+    const errors = [];
+    if (!date || isNaN(date)) errors.push('Invalid date: "' + dateStr + '"');
+    if (debit === 0 && credit === 0) errors.push('No amount');
+
+    txns.push({
+      id: `txn_${Date.now()}_${i}`,
+      rowNum: i + 1,
+      dateStr: dateStr,
+      date: date,
+      narration: narration,
+      ref: ref,
+      debit: debit,
+      credit: credit,
+      balance: balance,
+      voucher: detectVoucherType(debit, credit, narration),
+      ledger: '',
+      errors: errors,
+      isDuplicate: false,
+      selected: false,
+    });
+  });
+
+  // Detect duplicates
+  detectDuplicates(txns);
+
+  // Apply rules
+  applyRulesToTransactions(txns, AppState.rules);
+
+  AppState.transactions = txns;
+  AppState.currentPage = 1;
+
+  hideLoading();
+  renderStats();
+  renderTable();
+  goToStep(2);
+  notify(`Parsed ${txns.length} transactions`, 'ok');
+}
+
+/* ──────────────────────────────────────────────
+   VOUCHER TYPE DETECTION
+────────────────────────────────────────────── */
+function detectVoucherType(debit, credit, narration) {
+  const n = (narration || '').toUpperCase();
+  // Contra patterns: own bank transfers
+  if (/\b(NEFT|RTGS|IMPS|UPI|ATM|CASH\s*DEPOSIT|CASH\s*WITHDRAW|TRANSFER\s*TO\s*SELF|SELF\s*TRANSFER)\b/.test(n)) {
+    if (debit > 0 && credit === 0) {
+      if (/ATM|CASH WITHDRAW/.test(n)) return 'Payment';
+      if (/TRANSFER TO SELF|SELF TRANSFER/.test(n)) return 'Contra';
+    }
+  }
+  if (credit > 0 && debit === 0) return 'Receipt';
+  if (debit > 0 && credit === 0) return 'Payment';
+  if (debit > 0 && credit > 0) return 'Contra';
+  return 'Payment';
+}
+
+/* ──────────────────────────────────────────────
+   DUPLICATE DETECTION
+────────────────────────────────────────────── */
+function detectDuplicates(txns) {
+  const seen = {};
+  txns.forEach(t => {
+    const key = `${DateUtil.formatTally(t.date)}_${t.debit}_${t.credit}_${t.narration.substring(0, 20)}`;
+    if (seen[key]) {
+      t.isDuplicate = true;
+      seen[key].isDuplicate = true;
+    } else {
+      seen[key] = t;
+    }
+  });
+}
+
+/* ──────────────────────────────────────────────
+   RULE ENGINE
+────────────────────────────────────────────── */
+function applyRulesToTransactions(txns, rules) {
+  const sorted = [...rules].sort((a, b) => (a.priority || 10) - (b.priority || 10));
+  txns.forEach(t => {
+    const n = (t.narration || '').toUpperCase();
+    for (const rule of sorted) {
+      if (n.includes(rule.keyword.toUpperCase())) {
+        t.ledger = rule.ledger;
+        if (rule.voucherOverride) t.voucher = rule.voucherOverride;
+        break;
+      }
+    }
+    // Auto-suggest from history
+    if (!t.ledger) {
+      const hist = Storage.loadHistory();
+      const words = n.split(/\s+/).filter(w => w.length > 3);
+      let bestMatch = null, bestCount = 0;
+      words.forEach(w => {
+        if (hist[w] && hist[w].count > bestCount) {
+          bestCount = hist[w].count;
+          bestMatch = hist[w].ledger;
+        }
+      });
+      if (bestMatch) t.ledger = bestMatch + ' (suggested)';
+    }
+    // Fallback to suspense
+    if (!t.ledger) {
+      const suspense = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+      t.ledger = suspense;
+    }
+  });
+}
+
+function applyRulesToAll() {
+  const suspense = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+  // Clear non-manual assignments
+  AppState.transactions.forEach(t => { t.ledger = ''; });
+  applyRulesToTransactions(AppState.transactions, AppState.rules);
+  renderTable();
+  renderLedgerSummary();
+  notify('Rules applied to all transactions', 'ok');
+}
+
+/* ──────────────────────────────────────────────
+   RENDER STATS
+────────────────────────────────────────────── */
+function renderStats() {
+  const txns = AppState.transactions;
+  const totalDebit = txns.reduce((s, t) => s + t.debit, 0);
+  const totalCredit = txns.reduce((s, t) => s + t.credit, 0);
+  const errors = txns.filter(t => t.errors.length > 0).length;
+  const dups = txns.filter(t => t.isDuplicate).length;
+  const unassigned = txns.filter(t => {
+    const sus = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+    return !t.ledger || t.ledger === sus || t.ledger.includes('(suggested)');
+  }).length;
+
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-chip">
+      <div><div class="stat-val blue">${txns.length}</div><div style="color:var(--text3);font-size:10px">Transactions</div></div>
+    </div>
+    <div class="stat-chip">
+      <div><div class="stat-val red">₹${fmtAmt(totalDebit)}</div><div style="color:var(--text3);font-size:10px">Total Debit</div></div>
+    </div>
+    <div class="stat-chip">
+      <div><div class="stat-val green">₹${fmtAmt(totalCredit)}</div><div style="color:var(--text3);font-size:10px">Total Credit</div></div>
+    </div>
+    ${errors > 0 ? `<div class="stat-chip"><div><div class="stat-val red">${errors}</div><div style="color:var(--text3);font-size:10px">Errors</div></div></div>` : ''}
+    ${dups > 0 ? `<div class="stat-chip"><div><div class="stat-val amber">${dups}</div><div style="color:var(--text3);font-size:10px">Duplicates</div></div></div>` : ''}
+    ${unassigned > 0 ? `<div class="stat-chip"><div><div class="stat-val amber">${unassigned}</div><div style="color:var(--text3);font-size:10px">Unclassified</div></div></div>` : ''}
+  `;
+}
+
+/* ──────────────────────────────────────────────
+   TRANSACTION TABLE RENDERER (paginated)
+────────────────────────────────────────────── */
+function getFilteredTransactions() {
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const fType = document.getElementById('filterType')?.value || '';
+  const fVoucher = document.getElementById('filterVoucher')?.value || '';
+  const suspense = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+
+  return AppState.transactions.filter(t => {
+    if (search && !(t.narration || '').toLowerCase().includes(search) &&
+        !(t.ref || '').toLowerCase().includes(search)) return false;
+    if (fType === 'debit' && t.debit === 0) return false;
+    if (fType === 'credit' && t.credit === 0) return false;
+    if (fType === 'error' && t.errors.length === 0) return false;
+    if (fType === 'duplicate' && !t.isDuplicate) return false;
+    if (fType === 'unassigned' && t.ledger && t.ledger !== suspense && !t.ledger.includes('(suggested)')) return false;
+    if (fVoucher && t.voucher !== fVoucher) return false;
+    return true;
+  });
+}
+
+function renderTable() {
+  const filtered = getFilteredTransactions();
+  const total = filtered.length;
+  const ps = AppState.pageSize;
+  const page = AppState.currentPage;
+  const totalPages = Math.max(1, Math.ceil(total / ps));
+  if (page > totalPages) AppState.currentPage = totalPages;
+  const slice = filtered.slice((page - 1) * ps, page * ps);
+
+  const tbody = document.getElementById('tableBody');
+
+  if (AppState.transactions.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:40px;font-family:var(--mono)">Upload a file in Step 1 to see transactions here.</td></tr>`;
+    document.getElementById('pageInfo').textContent = '';
+    document.getElementById('pageBtns').innerHTML = '';
+    return;
+  }
+
+  // Compute running balance for ALL transactions in order (not just filtered/paged)
+  const openingBal = parseFloat(document.getElementById('openingBalanceInput')?.value || 0) || 0;
+  let runBal = openingBal;
+  AppState.transactions.forEach(t => {
+    runBal += (t.credit || 0) - (t.debit || 0);
+    t._computedBalance = runBal;
+  });
+
+  if (slice.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:30px;font-family:var(--mono)">No matching transactions.</td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(t => {
+      const hasError = t.errors.length > 0;
+      const cls = hasError ? 'has-error' : (t.isDuplicate ? 'is-duplicate' : '');
+      const flags = [
+        ...t.errors.map(e => `<span class="err-icon" data-tip="${escHtml(e)}">⚠</span>`),
+        ...(t.isDuplicate ? [`<span class="dup-icon" data-tip="Possible duplicate">⊕</span>`] : [])
+      ].join('');
+      // Debit / Credit: always editable (important for error rows that need correction)
+      const debitCell = `<input class="editable-cell" type="text" value="${t.debit ? t.debit.toFixed(2) : ''}"
+        style="min-width:80px;color:var(--red);text-align:right"
+        placeholder="0.00"
+        onchange="editAmountField('${t.id}','debit',this.value)">`;
+      const creditCell = `<input class="editable-cell" type="text" value="${t.credit ? t.credit.toFixed(2) : ''}"
+        style="min-width:80px;color:var(--green);text-align:right"
+        placeholder="0.00"
+        onchange="editAmountField('${t.id}','credit',this.value)">`;
+      const computedBal = t._computedBalance !== undefined ? fmtAmt(t._computedBalance) : '';
+      return `
+        <tr class="${cls}" data-id="${t.id}">
+          <td><input type="checkbox" class="row-cb" ${t.selected ? 'checked' : ''} onchange="toggleRow('${t.id}', this)"></td>
+          <td class="row-num">${t.rowNum}</td>
+          <td><input class="editable-cell" value="${escHtml(t.dateStr || '')}" style="min-width:90px" onchange="editField('${t.id}','dateStr',this.value)"></td>
+          <td>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <input class="editable-cell" value="${escHtml(t.narration)}" style="min-width:160px" onchange="editField('${t.id}','narration',this.value)" title="Bank narration">
+              ${t.userNote ? `<span style="font-family:var(--mono);font-size:10px;color:var(--teal);padding:1px 4px;background:var(--teal-glow);border-radius:3px">📝 ${escHtml(t.userNote)}</span>` : ''}
+            </div>
+          </td>
+          <td>
+            <input class="editable-cell" value="${escHtml(t.userNote || '')}"
+              style="min-width:120px;color:var(--teal);font-size:11px"
+              placeholder="Add note..."
+              title="Your custom note (shown before narration in Tally)"
+              onchange="editField('${t.id}','userNote',this.value);renderTable()">
+          </td>
+          <td><input class="editable-cell" value="${escHtml(t.ref)}" style="min-width:80px" onchange="editField('${t.id}','ref',this.value)"></td>
+          <td class="debit">${debitCell}</td>
+          <td class="credit">${creditCell}</td>
+          <td class="balance" style="font-family:var(--mono);font-size:12px;color:var(--blue);text-align:right;white-space:nowrap">${computedBal}</td>
+          <td>
+            <select class="editable-cell" style="min-width:90px" onchange="editField('${t.id}','voucher',this.value)">
+              ${['Payment','Receipt','Contra'].map(v =>
+                `<option ${t.voucher === v ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </td>
+          <td class="ledger-cell">
+            <input class="editable-cell" value="${escHtml(t.ledger)}"
+              style="min-width:150px"
+              onchange="editField('${t.id}','ledger',this.value)"
+              list="ledgerSuggestList">
+          </td>
+          <td>${flags}</td>
+          <td>
+            <button onclick="deleteSingleRow('${t.id}')"
+              style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px;transition:color .15s"
+              onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text3)'"
+              title="Delete this row">&#x2715;</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Ledger datalist
+  const ledgers = [...new Set(AppState.transactions.map(t => t.ledger).filter(Boolean))];
+  const dl = document.createElement('datalist');
+  dl.id = 'ledgerSuggestList';
+  dl.innerHTML = ledgers.map(l => `<option value="${l}">`).join('');
+  const old = document.getElementById('ledgerSuggestList');
+  if (old) old.remove();
+  document.body.appendChild(dl);
+
+  // Pagination
+  document.getElementById('pageInfo').textContent = `Showing ${(page-1)*ps + 1}–${Math.min(page*ps, total)} of ${total}`;
+  const btns = document.getElementById('pageBtns');
+  btns.innerHTML = '';
+  const maxBtn = 7;
+  let start = Math.max(1, page - 3);
+  let end = Math.min(totalPages, start + maxBtn - 1);
+  if (end - start < maxBtn - 1) start = Math.max(1, end - maxBtn + 1);
+
+  if (start > 1) btns.appendChild(makePageBtn('«', 1));
+  for (let i = start; i <= end; i++) btns.appendChild(makePageBtn(i, i));
+  if (end < totalPages) btns.appendChild(makePageBtn('»', totalPages));
+
+  renderStats();
+}
+
+function makePageBtn(label, page) {
+  const b = document.createElement('button');
+  b.className = `page-btn ${page === AppState.currentPage ? 'active' : ''}`;
+  b.textContent = label;
+  b.onclick = () => { AppState.currentPage = page; renderTable(); };
+  return b;
+}
+
+function escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function editField(id, field, val) {
+  const t = AppState.transactions.find(t => t.id === id);
+  if (!t) return;
+  t[field] = val;
+  if (field === 'dateStr') {
+    t.date = DateUtil.parse(val);
+    if (!t.date || isNaN(t.date)) {
+      t.errors = t.errors.filter(e => !e.startsWith('Invalid date'));
+      t.errors.push('Invalid date: ' + val);
+    } else {
+      t.errors = t.errors.filter(e => !e.startsWith('Invalid date'));
+    }
+  }
+}
+
+function editAmountField(id, field, val) {
+  const t = AppState.transactions.find(t => t.id === id);
+  if (!t) return;
+  const amt = parseAmount(val);
+  t[field] = amt >= 0 ? amt : 0;
+  // Clear "No amount" error if now fixed
+  if (t.debit > 0 || t.credit > 0) {
+    t.errors = t.errors.filter(e => e !== 'No amount');
+  }
+  // Re-detect voucher type
+  t.voucher = detectVoucherType(t.debit, t.credit, t.narration);
+  renderTable();
+  renderStats();
+}
+
+function toggleRow(id, cb) {
+  const t = AppState.transactions.find(t => t.id === id);
+  if (t) t.selected = cb.checked;
+}
+function toggleSelectAll(cb) {
+  getFilteredTransactions().forEach(t => t.selected = cb.checked);
+  renderTable();
+}
+function selectAll() {
+  getFilteredTransactions().forEach(t => t.selected = true);
+  renderTable();
+}
+function deselectAll() {
+  AppState.transactions.forEach(t => t.selected = false);
+  renderTable();
+}
+
+function deleteSelectedRows() {
+  const selected = AppState.transactions.filter(t => t.selected);
+  if (selected.length === 0) {
+    notify('No rows checked. Use the checkboxes to select rows to delete.', 'warn');
+    return;
+  }
+  if (!confirm(`Delete ${selected.length} selected row(s)? This cannot be undone.`)) return;
+  const ids = new Set(selected.map(t => t.id));
+  AppState.transactions = AppState.transactions.filter(t => !ids.has(t.id));
+  // Reset to first page if current page is now empty
+  const totalPages = Math.max(1, Math.ceil(AppState.transactions.length / AppState.pageSize));
+  if (AppState.currentPage > totalPages) AppState.currentPage = totalPages;
+  renderTable();
+  renderStats();
+  notify(`Deleted ${selected.length} row(s)`, 'ok');
+}
+
+function deleteSingleRow(id) {
+  AppState.transactions = AppState.transactions.filter(t => t.id !== id);
+  renderTable();
+  renderStats();
+}
+
+function bulkAssign() {
+  const ledger = document.getElementById('bulkLedger').value.trim();
+  const voucher = document.getElementById('bulkVoucher').value;
+  if (!ledger && !voucher) { notify('Enter a ledger name or voucher type', 'warn'); return; }
+  let count = 0;
+  AppState.transactions.filter(t => t.selected).forEach(t => {
+    if (ledger) t.ledger = ledger;
+    if (voucher) t.voucher = voucher;
+    count++;
+  });
+  if (count === 0) { notify('No rows selected. Use checkboxes to select rows.', 'warn'); return; }
+  renderTable();
+  notify(`Updated ${count} transactions`, 'ok');
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterType').value = '';
+  document.getElementById('filterVoucher').value = '';
+  renderTable();
+}
+
+/* ──────────────────────────────────────────────
+   RULES UI
+────────────────────────────────────────────── */
+function renderRules() {
+  const rules = AppState.rules;
+  const container = document.getElementById('rulesContainer');
+  if (rules.length === 0) {
+    container.innerHTML = `<div style="text-align:center;color:var(--text3);padding:20px;font-family:var(--mono);font-size:12px">No rules defined yet. Click "Add Rule" to start.</div>`;
+    return;
+  }
+  container.innerHTML = `<div class="rules-list">${
+    rules.map((r, i) => `
+      <div class="rule-item">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);width:20px">#${r.priority || 10}</span>
+        <span class="rule-keyword">${escHtml(r.keyword)}</span>
+        <span class="rule-arrow">→</span>
+        <span class="rule-ledger">${escHtml(r.ledger)}</span>
+        ${r.voucherOverride ? `<span class="voucher-badge vtype-${r.voucherOverride.toLowerCase()}">${r.voucherOverride}</span>` : ''}
+        <div class="rule-actions">
+          <button class="btn btn-secondary btn-sm" onclick="deleteRule(${i})">✕</button>
+        </div>
+      </div>
+    `).join('')
+  }</div>`;
+}
+
+function saveRule() {
+  const kw = document.getElementById('ruleKeyword').value.trim();
+  const lg = document.getElementById('ruleLedger').value.trim();
+  const vo = document.getElementById('ruleVoucher').value;
+  const pr = parseInt(document.getElementById('rulePriority').value) || 10;
+  if (!kw || !lg) { notify('Keyword and Ledger are required', 'warn'); return; }
+  AppState.rules.push({ keyword: kw, ledger: lg, voucherOverride: vo || null, priority: pr });
+  AppState.rules.sort((a, b) => (a.priority || 10) - (b.priority || 10));
+  Storage.saveRules(AppState.rules);
+  document.getElementById('ruleKeyword').value = '';
+  document.getElementById('ruleLedger').value = '';
+  document.getElementById('ruleVoucher').value = '';
+  document.getElementById('rulePriority').value = '10';
+  closeModal('addRuleModal');
+  renderRules();
+  notify('Rule saved', 'ok');
+}
+
+function deleteRule(i) {
+  AppState.rules.splice(i, 1);
+  Storage.saveRules(AppState.rules);
+  renderRules();
+}
+
+function clearAllRules() {
+  if (!confirm('Delete all rules?')) return;
+  AppState.rules = [];
+  Storage.saveRules([]);
+  renderRules();
+  notify('All rules deleted', 'ok');
+}
+
+function exportRules() {
+  const blob = new Blob([JSON.stringify(AppState.rules, null, 2)], { type: 'application/json' });
+  download(blob, 'tally_rules.json');
+}
+
+function importRulesClick() { document.getElementById('importRulesInput').click(); }
+function importRules(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const rules = JSON.parse(ev.target.result);
+      AppState.rules = rules;
+      Storage.saveRules(rules);
+      renderRules();
+      notify(`Imported ${rules.length} rules`, 'ok');
+    } catch { notify('Invalid rules file', 'err'); }
+  };
+  reader.readAsText(file);
+}
+
+/* ──────────────────────────────────────────────
+   LEDGER SUMMARY
+────────────────────────────────────────────── */
+function renderLedgerSummary() {
+  const map = {};
+  AppState.transactions.forEach(t => {
+    const l = t.ledger || 'Unassigned';
+    if (!map[l]) map[l] = { count: 0, debit: 0, credit: 0 };
+    map[l].count++;
+    map[l].debit += t.debit;
+    map[l].credit += t.credit;
+  });
+  const sorted = Object.entries(map).sort((a, b) => b[1].count - a[1].count);
+  document.getElementById('ledgerSummary').innerHTML = `
+    <div class="table-wrap">
+      <table class="txn-table">
+        <thead><tr>
+          <th>LEDGER</th><th>TXN COUNT</th><th>TOTAL DEBIT (₹)</th><th>TOTAL CREDIT (₹)</th>
+        </tr></thead>
+        <tbody>${sorted.map(([l, v]) => `
+          <tr>
+            <td>${escHtml(l)}</td>
+            <td>${v.count}</td>
+            <td class="debit">${v.debit ? fmtAmt(v.debit) : ''}</td>
+            <td class="credit">${v.credit ? fmtAmt(v.credit) : ''}</td>
+          </tr>
+        `).join('')}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderAutoSuggest() {
+  const hist = Storage.loadHistory();
+  const entries = Object.entries(hist).sort((a, b) => b[1].count - a[1].count).slice(0, 20);
+  if (entries.length === 0) {
+    document.getElementById('autoSuggest').innerHTML = '<div style="color:var(--text3)">No history yet. Export data to build suggestions.</div>';
+    return;
+  }
+  document.getElementById('autoSuggest').innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;gap:8px">${
+      entries.map(([kw, v]) => `
+        <div class="rule-item" style="padding:6px 10px">
+          <span class="rule-keyword">${escHtml(kw)}</span>
+          <span class="rule-arrow">→</span>
+          <span class="rule-ledger">${escHtml(v.ledger)}</span>
+          <button class="btn btn-secondary btn-sm" onclick="addRuleFromSuggest('${escHtml(kw)}','${escHtml(v.ledger)}')">+ Rule</button>
+        </div>
+      `).join('')
+    }</div>
+  `;
+}
+
+function addRuleFromSuggest(kw, ledger) {
+  if (AppState.rules.some(r => r.keyword === kw)) { notify('Rule already exists', 'warn'); return; }
+  AppState.rules.push({ keyword: kw, ledger: ledger, voucherOverride: null, priority: 10 });
+  Storage.saveRules(AppState.rules);
+  renderRules();
+  notify(`Added rule: ${kw} → ${ledger}`, 'ok');
+}
+
+/* ──────────────────────────────────────────────
+   EXPORT STATS
+────────────────────────────────────────────── */
+function renderExportStats() {
+  const txns = getExportTransactions();
+  const debit = txns.reduce((s, t) => s + t.debit, 0);
+  const credit = txns.reduce((s, t) => s + t.credit, 0);
+  const suspense = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+  const unclassified = txns.filter(t => t.ledger === suspense).length;
+  document.getElementById('exportStatsBar').innerHTML = `
+    <div class="stat-chip">
+      <div><div class="stat-val blue">${txns.length}</div><div style="color:var(--text3);font-size:10px">Vouchers to export</div></div>
+    </div>
+    <div class="stat-chip">
+      <div><div class="stat-val red">₹${fmtAmt(debit)}</div><div style="color:var(--text3);font-size:10px">Total Debit</div></div>
+    </div>
+    <div class="stat-chip">
+      <div><div class="stat-val green">₹${fmtAmt(credit)}</div><div style="color:var(--text3);font-size:10px">Total Credit</div></div>
+    </div>
+    <div class="stat-chip">
+      <div><div class="stat-val amber">${unclassified}</div><div style="color:var(--text3);font-size:10px">→ Suspense</div></div>
+    </div>
+  `;
+}
+
+function getExportTransactions() {
+  const dupMode = document.getElementById('dupHandling')?.value || 'include';
+  const prefix = document.getElementById('narrationPrefix')?.value || '';
+  const suspense = document.getElementById('suspenseLedger')?.value || 'Suspense Account';
+
+  return AppState.transactions.filter(t => {
+    if (dupMode === 'skip' && t.isDuplicate) return false;
+    return true;
+  }).map(t => ({
+    ...t,
+    narration: (prefix + (t.narration || '')) + (t.isDuplicate && dupMode === 'flag' ? ' [DUPLICATE?]' : ''),
+    ledger: t.ledger || suspense,
+  }));
+}
+
+/* ──────────────────────────────────────────────
+   EXCEL EXPORT (SheetJS)
+────────────────────────────────────────────── */
+function exportExcel() {
+  const txns = getExportTransactions();
+  if (!txns.length) { notify('No transactions to export', 'warn'); return; }
+
+  Storage.learnFromExport(txns);
+
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Transactions
+  const rows = [
+    ['Date', 'Narration', 'User Note', 'Ref/ChequeNo', 'Debit', 'Credit', 'Balance', 'Voucher Type', 'Ledger Name', 'Bank Ledger', 'Company']
+  ];
+  const company = document.getElementById('companyName').value || '';
+  const bankLedger = document.getElementById('bankLedgerName').value || 'Bank Account';
+
+  txns.forEach(t => {
+    rows.push([
+      DateUtil.format(t.date),
+      t.narration,
+      t.userNote || '',
+      t.ref,
+      t.debit || '',
+      t.credit || '',
+      t.balance || '',
+      t.voucher,
+      t.ledger,
+      bankLedger,
+      company,
+    ]);
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{ wch: 12 }, { wch: 40 }, { wch: 25 }, { wch: 18 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 30 }, { wch: 25 }, { wch: 25 }];
+  XLSX.utils.book_append_sheet(wb, ws, 'Transactions');
+
+  // Sheet 2: Ledger Summary
+  const sumMap = {};
+  txns.forEach(t => {
+    if (!sumMap[t.ledger]) sumMap[t.ledger] = { count: 0, debit: 0, credit: 0 };
+    sumMap[t.ledger].count++;
+    sumMap[t.ledger].debit += t.debit;
+    sumMap[t.ledger].credit += t.credit;
+  });
+  const sumRows = [['Ledger', 'Transactions', 'Total Debit', 'Total Credit', 'Net']];
+  Object.entries(sumMap).forEach(([l, v]) => {
+    sumRows.push([l, v.count, v.debit || '', v.credit || '', (v.credit - v.debit).toFixed(2)]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(sumRows);
+  ws2['!cols'] = [{ wch: 35 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 14 }];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Ledger Summary');
+
+  const buf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  download(new Blob([buf], { type: 'application/octet-stream' }), `tally_import_${dateSuffix()}.xlsx`);
+  notify('Excel downloaded!', 'ok');
+}
+
+function exportCSV() {
+  const txns = getExportTransactions();
+  if (!txns.length) { notify('No transactions to export', 'warn'); return; }
+  const rows = [['Date', 'Narration', 'Ref', 'Debit', 'Credit', 'Balance', 'Voucher Type', 'Ledger']];
+  txns.forEach(t => rows.push([
+    DateUtil.format(t.date), t.narration, t.ref,
+    t.debit || '', t.credit || '', t.balance || '', t.voucher, t.ledger
+  ]));
+  const csv = rows.map(r => r.map(c => `"${String(c || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  download(new Blob([csv], { type: 'text/csv' }), `tally_import_${dateSuffix()}.csv`);
+  notify('CSV downloaded!', 'ok');
+}
+
+/* ──────────────────────────────────────────────
+   TALLY XML EXPORT
+────────────────────────────────────────────── */
+function exportTallyXML() {
+  const txns = getExportTransactions();
+  if (!txns.length) { notify('No transactions to export', 'warn'); return; }
+
+  Storage.learnFromExport(txns);
+
+  const company = document.getElementById('companyName').value || 'MyCompany';
+  const bankLedger = document.getElementById('bankLedgerName').value || 'Bank Account';
+  const tallyVersion = document.getElementById('tallyVersionSelect')?.value || 'prime';
+
+  const vouchers = txns.map(t => buildTallyVoucher(t, bankLedger, tallyVersion)).join('\n');
+
+  const versionLabel = tallyVersion === 'erp9' ? 'Tally ERP 9' : 'Tally Prime';
+  const xml = `<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by TallyRepo Auto Entry (tallyrepo.github.io) — ${new Date().toLocaleString('en-IN')} -->
+<!-- Format: ${versionLabel} | Transactions: ${txns.length} | Bank: ${bankLedger} | Company: ${company} -->
+<ENVELOPE>
+  <HEADER>
+    <TALLYREQUEST>Import Data</TALLYREQUEST>
+  </HEADER>
+  <BODY>
+    <IMPORTDATA>
+      <REQUESTDESC>
+        <REPORTNAME>Vouchers</REPORTNAME>
+        <STATICVARIABLES>
+          <SVCURRENTCOMPANY>${xmlEsc(company)}</SVCURRENTCOMPANY>
+        </STATICVARIABLES>
+      </REQUESTDESC>
+      <REQUESTDATA>
+${vouchers}
+      </REQUESTDATA>
+    </IMPORTDATA>
+  </BODY>
+</ENVELOPE>`;
+
+  const suffix = tallyVersion === 'erp9' ? 'erp9' : 'prime';
+  download(new Blob([xml], { type: 'application/xml' }), `tally_${suffix}_vouchers_${dateSuffix()}.xml`);
+  notify(`${versionLabel} XML downloaded!`, 'ok');
+}
+
+function buildTallyVoucher(t, bankLedger, tallyVersion) {
+  // Robust date resolution
+  let dateObj = (t.date instanceof Date && !isNaN(t.date.getTime()))
+    ? t.date
+    : DateUtil.parse(t.dateStr);
+  if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) dateObj = new Date();
+  const date = DateUtil.formatTally(dateObj);
+
+  // Combine userNote + narration
+  const fullNarration = t.userNote
+    ? `${t.userNote} | ${t.narration || ''}`
+    : (t.narration || '');
+  const narration = xmlEsc(fullNarration);
+  const vType = t.voucher || 'Payment';
+  const ledger = xmlEsc(t.ledger);
+  const bank = xmlEsc(bankLedger);
+  const amount = t.debit > 0 ? t.debit : t.credit;
+  const ref = xmlEsc(t.ref || '');
+
+  let entries;
+  if (vType === 'Receipt') {
+    entries = `
+      <ALLLEDGERENTRIES.LIST>
+        <LEDGERNAME>${bank}</LEDGERNAME>
+        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+        <AMOUNT>-${amount.toFixed(2)}</AMOUNT>
+      </ALLLEDGERENTRIES.LIST>
+      <ALLLEDGERENTRIES.LIST>
+        <LEDGERNAME>${ledger}</LEDGERNAME>
+        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+        <AMOUNT>${amount.toFixed(2)}</AMOUNT>
+      </ALLLEDGERENTRIES.LIST>`;
+  } else {
+    entries = `
+      <ALLLEDGERENTRIES.LIST>
+        <LEDGERNAME>${ledger}</LEDGERNAME>
+        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+        <AMOUNT>-${amount.toFixed(2)}</AMOUNT>
+      </ALLLEDGERENTRIES.LIST>
+      <ALLLEDGERENTRIES.LIST>
+        <LEDGERNAME>${bank}</LEDGERNAME>
+        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+        <AMOUNT>${amount.toFixed(2)}</AMOUNT>
+      </ALLLEDGERENTRIES.LIST>`;
+  }
+
+  if (tallyVersion === 'erp9') {
+    // Tally ERP 9 — no OBJVIEW/PERSISTEDVIEW needed
+    return `    <TALLYMESSAGE xmlns:UDF="TallyUDF">
+      <VOUCHER VCHTYPE="${vType}" ACTION="Create">
+        <DATE>${date}</DATE>
+        <EFFECTIVEDATE>${date}</EFFECTIVEDATE>
+        <VOUCHERTYPENAME>${vType}</VOUCHERTYPENAME>
+        <NARRATION>${narration}</NARRATION>
+        <REFERENCE>${ref}</REFERENCE>${entries}
+      </VOUCHER>
+    </TALLYMESSAGE>`;
+  } else {
+    // Tally Prime — EFFECTIVEDATE is REQUIRED or date shows blank after import
+    return `    <TALLYMESSAGE xmlns:UDF="TallyUDF">
+      <VOUCHER VCHTYPE="${vType}" ACTION="Create" OBJVIEW="Accounting Voucher View">
+        <DATE>${date}</DATE>
+        <EFFECTIVEDATE>${date}</EFFECTIVEDATE>
+        <VOUCHERTYPENAME>${vType}</VOUCHERTYPENAME>
+        <PERSISTEDVIEW>Accounting Voucher View</PERSISTEDVIEW>
+        <NARRATION>${narration}</NARRATION>
+        <REFERENCE>${ref}</REFERENCE>${entries}
+      </VOUCHER>
+    </TALLYMESSAGE>`;
+  }
+}
+
+function xmlEsc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+/* ──────────────────────────────────────────────
+   DOWNLOAD HELPER
+────────────────────────────────────────────── */
+function download(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+}
+
+function dateSuffix() {
+  const d = new Date();
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+
+/* ──────────────────────────────────────────────
+   DEMO DATA LOADERS
+────────────────────────────────────────────── */
+const SBI_DEMO = [
+  ['Txn Date', 'Description', 'Ref./Chq./DD No.', 'Debit', 'Credit', 'Balance'],
+  ['01/01/2024', 'Opening Balance', '', '', '', '50000.00'],
+  ['03/01/2024', 'UPI-AMAZON PAY-9876543210-Amazon', 'UPI/234567890', '2500.00', '', '47500.00'],
+  ['05/01/2024', 'SALARY CREDIT FROM ABC CORP', 'NEFT/3456789', '', '85000.00', '132500.00'],
+  ['07/01/2024', 'HDFC CREDIT CARD PAYMENT', 'NACH/4567890', '15000.00', '', '117500.00'],
+  ['10/01/2024', 'UPI-SWIGGY-FOOD APP', 'UPI/567890', '450.00', '', '117050.00'],
+  ['12/01/2024', 'ATM CASH WITHDRAWAL SBI', 'ATM/6789012', '5000.00', '', '112050.00'],
+  ['14/01/2024', 'NEFT TO HDFC SAVINGS-RENT', 'NEFT/789012', '22000.00', '', '90050.00'],
+  ['15/01/2024', 'INTEREST CREDIT', 'INT/890123', '', '250.00', '90300.00'],
+  ['18/01/2024', 'UPI-PHONEPE-ELECTRICITY BILL', 'UPI/901234', '2300.00', '', '88000.00'],
+  ['20/01/2024', 'GST PAYMENT ONLINE', 'NEFT/012345', '8500.00', '', '79500.00'],
+  ['22/01/2024', 'UPI-AMAZON-OFFICE SUPPLIES', 'UPI/123456', '3200.00', '', '76300.00'],
+  ['24/01/2024', 'FREELANCE PAYMENT RECEIVED', 'IMPS/234567', '', '25000.00', '101300.00'],
+  ['26/01/2024', 'LIC PREMIUM PAYMENT', 'ECS/345678', '12000.00', '', '89300.00'],
+  ['28/01/2024', 'PETROL-HP GAS STATION', 'UPI/456789', '3500.00', '', '85800.00'],
+  ['30/01/2024', 'TRANSFER TO SELF-SAVINGS', 'NEFT/567890', '20000.00', '', '65800.00'],
+  ['31/01/2024', 'CLOSING BALANCE', '', '', '', '65800.00'],
+];
+
+const HDFC_DEMO = [
+  ['Date', 'Narration', 'Chq./Ref.No.', 'Value Dt', 'Withdrawal Amt(Dr)', 'Deposit Amt(Cr)', 'Closing Balance'],
+  ['02/01/24', 'NEFT CR-ICICI-CONSULTING FEES', 'N123456789', '02/01/24', '', '45000.00', '145000.00'],
+  ['04/01/24', 'UPI-9876543210-ZOMATO', 'UPI/987654', '04/01/24', '650.00', '', '144350.00'],
+  ['06/01/24', 'DEBIT CARD-RELIANCE SMART', 'POS/876543', '06/01/24', '4200.00', '', '140150.00'],
+  ['10/01/24', 'NEFT DR-AXIS-HOME LOAN EMI', 'N765432109', '10/01/24', '35000.00', '', '105150.00'],
+  ['12/01/24', 'IMPS-MUTUAL FUND SIP', 'I654321098', '12/01/24', '10000.00', '', '95150.00'],
+  ['15/01/24', 'SALARY-XYZ COMPANY PVT LTD', 'N543210987', '15/01/24', '', '75000.00', '170150.00'],
+  ['18/01/24', 'UPI-PAYTM-MOBILE RECHARGE', 'UPI/432109', '18/01/24', '599.00', '', '169551.00'],
+  ['22/01/24', 'CHEQUE-LANDLORD RENT', '001234', '22/01/24', '18000.00', '', '151551.00'],
+];
+
+function loadDemoSBI() {
+  AppState.rawData = SBI_DEMO;
+  AppState.selectedBank = 'sbi';
+  AppState.fileType = 'excel';
+  AppState.fileName = 'SBI_Demo.xlsx';
+  document.getElementById('fileInfo').style.display = '';
+  document.getElementById('fileInfoText').textContent = 'SBI Demo Data (16 transactions) — loaded';
+  document.getElementById('parseBtn').disabled = false;
+  document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('bankCard-sbi')?.classList.add('selected');
+  document.getElementById('companyName').value = 'Demo Enterprises Pvt Ltd';
+  document.getElementById('bankLedgerName').value = 'SBI Current Account';
+  notify('SBI sample data loaded. Click "Parse Statement" to continue.', 'ok');
+}
+
+function loadDemoHDFC() {
+  AppState.rawData = HDFC_DEMO;
+  AppState.selectedBank = 'hdfc';
+  AppState.fileType = 'excel';
+  AppState.fileName = 'HDFC_Demo.xlsx';
+  document.getElementById('fileInfo').style.display = '';
+  document.getElementById('fileInfoText').textContent = 'HDFC Demo Data (8 transactions) — loaded';
+  document.getElementById('parseBtn').disabled = false;
+  document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('bankCard-hdfc')?.classList.add('selected');
+  document.getElementById('companyName').value = 'Demo Enterprises Pvt Ltd';
+  document.getElementById('bankLedgerName').value = 'HDFC Current Account';
+  notify('HDFC sample data loaded. Click "Parse Statement" to continue.', 'ok');
+}
+
+function loadDemoGeneric() {
+  AppState.rawData = [
+    ['Date', 'Description', 'Reference', 'Amount', 'Balance'],
+    ['2024-01-01', 'Opening Balance', '', '', '25000'],
+    ['2024-01-03', 'UPI Payment to Vendor ABC', 'UPI001', '-5000', '20000'],
+    ['2024-01-05', 'Client Payment Received', 'REF002', '30000', '50000'],
+    ['2024-01-08', 'Office Rent Payment', 'CHQ003', '-12000', '38000'],
+    ['2024-01-10', 'Internet Bill Payment', 'UPI004', '-1499', '36501'],
+    ['2024-01-12', 'Sales Revenue', 'NEFT005', '18000', '54501'],
+    ['2024-01-15', 'Salary to Employee', 'NEFT006', '-25000', '29501'],
+    ['2024-01-18', 'UPI Amazon Purchase', 'UPI007', '-3200', '26301'],
+  ];
+  AppState.selectedBank = 'generic';
+  AppState.fileType = 'csv';
+  AppState.fileName = 'Generic_Demo.csv';
+  document.getElementById('fileInfo').style.display = '';
+  document.getElementById('fileInfoText').textContent = 'Generic Demo CSV (8 transactions) — loaded';
+  document.getElementById('parseBtn').disabled = false;
+  document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('bankCard-generic')?.classList.add('selected');
+  notify('Generic CSV sample loaded. Click "Parse Statement" to continue.', 'ok');
+}
+
+/* ──────────────────────────────────────────────
+   PARSE ENTRY (handles preloaded data)
+────────────────────────────────────────────── */
+const _origParseFile = parseFile;
+window.parseFile = async function() {
+  if (AppState.rawData && !AppState._file) {
+    // Demo data path
+    showLoading('Processing demo data...');
+    try {
+      autoMapColumns();
+      buildColMapperUI();
+      hideLoading();
+      openModal('colMapModal');
+    } catch (err) {
+      hideLoading();
+      notify('Error: ' + err.message, 'err');
+    }
+    return;
+  }
+  await _origParseFile();
+};
+
+/* ──────────────────────────────────────────────
+   RESET
+────────────────────────────────────────────── */
+function resetAll() {
+  if (!confirm('Start over? This will clear all current data.')) return;
+  AppState.rawTransactions = [];
+  AppState.transactions = [];
+  AppState.rawData = null;
+  AppState._file = null;
+  AppState.fileType = null;
+  AppState.colMap = {};
+  AppState.currentPage = 1;
+  document.getElementById('fileInfo').style.display = 'none';
+  document.getElementById('parseBtn').disabled = true;
+  document.getElementById('tableBody').innerHTML =
+    `<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:40px;font-family:var(--mono)">Upload a file in Step 1 to see transactions here.</td></tr>`;
+  document.getElementById('fileInput').value = '';
+  const ob = document.getElementById('openingBalanceInput');
+  if (ob) ob.value = '0';
+  goToStep(1);
+  notify('Reset complete', 'ok');
+}
+
+</script>
+</body>
+</html>

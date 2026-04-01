@@ -1,0 +1,15 @@
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+
+# PDF parsing libraries (install whichever you need)
+pdfplumber==0.11.1       # Best for digital PDFs with text layer
+tabula-py==2.9.0         # Java-based, great for structured tables (needs Java)
+pdf2image==1.17.0        # Convert PDF pages to images (for Tesseract)
+pytesseract==0.3.10      # OCR for scanned PDFs (needs Tesseract installed)
+Pillow==10.3.0           # Required by pdf2image
+
+# For Tesseract: install separately
+# Ubuntu/Debian: sudo apt-get install tesseract-ocr poppler-utils
+# macOS:         brew install tesseract poppler
+# Windows:       Download from https://github.com/UB-Mannheim/tesseract/wiki
